@@ -1,0 +1,65 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.ReminderApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#587799</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo_inset</item>
+        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Theme.ReminderApp</item>
+    </style>
+
+    <style name="BG">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="TXT">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="BTTN">
+        <item name="android:fontFamily">@font/louiscafebold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TOLBR">
+        <item name="android:background">@color/darkestwhite</item>
+    </style>
+
+    <style name="DRWRHDR">
+        <item name="cardBackgroundColor">@color/darkestwhite</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_custom_corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+    </style>
+
+    <style name="DRWR">
+        <item name="android:background">@color/darkerwhite</item>
+    </style>
+
+    <style name="outlinedTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/text_field_light</item>
+        <item name="android:textColorHint">@color/text_field_light</item>
+        <item name="passwordToggleTint">@color/black</item>
+        <item name="colorPrimary">@color/darkestwhite</item>
+    </style>
+</resources>

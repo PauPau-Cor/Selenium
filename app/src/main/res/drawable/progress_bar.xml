@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@android:id/background">
+        <shape android:shape="ring" android:useLevel="false" android:thicknessRatio="7">
+            <gradient
+                android:endColor="#59C8D1"
+                android:centerColor="#6F7AC8"
+                android:startColor="#B78ACD"
+                />
+        </shape>
+    </item>
+</layer-list>

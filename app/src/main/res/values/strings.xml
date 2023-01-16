@@ -1,0 +1,51 @@
+<resources>
+    <!--General-->
+    <string name="app_name">Selenium</string>
+    <string name="openMn">Abrir menú</string>
+    <string name="closeMn">Cerrar menú</string>
+
+    <!--Layout-->
+
+    <string name="desc_logo">App logo</string>
+    <string name="mail">Correo</string>
+    <string name="username">Nombre de usuario</string>
+
+    <string name="log_pass">Contraseña</string>
+    <string name="log_login">Iniciar sesión</string>
+    <string name="log_frgtpass">¿Olvidaste tu contraseña?</string>
+    <string name="log_reg">¿No tienes cuenta?\n¡Regístrate!</string>
+
+    <string name="reg_birthday">Cumpleaños</string>
+    <string name="reg_pass_conf">Confirmar contraseña</string>
+    <string name="reg_register">Crear cuenta</string>
+
+    <string name="logout">Cerrar sesión</string>
+    <string name="calendar_weeks">Semanas</string>
+    <string name="calendar_months">Meses</string>
+    <string name="calendar">Calendario</string>
+    <string name="tasks">Tareas</string>
+    <string name="calendar_days">Días</string>
+    <string name="all_tasks">Todas</string>
+    <string name="not_done_tasks">No hechas</string>
+    <string name="done_tasks">Hechas</string>
+    <string name="account">Cuenta</string>
+    <string name="start">Inicio</string>
+
+    <!--Code-->
+    <!--Formats-->
+    <string name="date_formatter">%1$d/%2$d/%3$d</string>
+    <!--Errors-->
+    <string name="err_default">Algo ha salido mal: %1$s</string>
+    <string name="err_empty_field">Favor de no dejar campo vacío.</string>
+    <string name="err_pass_not_match">Contraseñas no coinciden.</string>
+    <string name="err_pass_not_secure">Contraseña debe incluir por lo menos una mayuscula, minuscula, número y 8 caracteres.</string>
+    <string name="err_wrong_format">Formato incorrecto.</string>
+    <string name="err_date_not_past">Esta fecha no ha pasado.</string>
+    <string name="err_email_used">Este correo ya está en uso por otro usuario.</string>
+    <string name="err_wrong_email">Este correo no está asociado con ninguna cuenta.</string>
+    <string name="err_wrong_pass">Contraseña incorrecta.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
