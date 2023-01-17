@@ -47,8 +47,8 @@
                 android:inputType="textEmailAddress"
                 android:textSize="26sp"
                 android:fontFamily="@font/louiscafe"
-                style="@style/TXT">
-            </com.google.android.material.textfield.TextInputEditText>
+                style="@style/TXT"
+                android:autofillHints="emailAddress"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,7 +71,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:fontFamily="@font/louiscafe"
-                android:textSize="26sp" />
+                android:textSize="26sp"
+                android:autofillHints="password"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

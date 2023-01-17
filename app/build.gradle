@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace 'com.example.reminderapp'
-    compileSdk 32
+    compileSdk 33
 
     buildFeatures{
         viewBinding = true
@@ -16,7 +16,7 @@ android {
     defaultConfig {
         applicationId "com.example.reminderapp"
         minSdk 26
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -36,10 +36,13 @@ android {
 
 dependencies {
 
-    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.firebase:firebase-firestore-ktx:24.4.1'
     implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
     implementation 'androidx.core:core-splashscreen:1.0.0'
+    implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 }

@@ -3,9 +3,11 @@ package com.example.reminderapp.generalMenus
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.reminderapp.R
 import com.example.reminderapp.authMenus.LoginActivity
 import com.example.reminderapp.dataClasses.Constants
