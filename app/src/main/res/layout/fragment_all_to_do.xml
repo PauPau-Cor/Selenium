@@ -40,10 +40,9 @@
 
             <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
                 android:id="@+id/PriorityGroup"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintWidth_percent=".6"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/AddTaskET"
                 app:layout_constraintEnd_toStartOf="@id/AddTaskDate"
                 app:layout_constraintTop_toBottomOf="@id/AddTaskET"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     app:toggle_text="@string/high"
-                    app:toggle_selectedBackgroundColor="#F44336"
+                    app:toggle_selectedBackgroundColor="@color/red_blue"
                     app:toggle_backgroundColor="@color/darkestwhite"/>
 
                 <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
@@ -62,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     app:toggle_text="@string/mid"
-                    app:toggle_selectedBackgroundColor="#FFEB3B"
+                    app:toggle_selectedBackgroundColor="@color/main_blue"
                     app:toggle_backgroundColor="@color/darkestwhite"/>
 
                 <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
@@ -70,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     app:toggle_text="@string/low"
-                    app:toggle_selectedBackgroundColor="#8BC34A"
+                    app:toggle_selectedBackgroundColor="@color/green_blue"
                     app:toggle_backgroundColor="@color/darkestwhite"/>
 
             </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
@@ -80,16 +79,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/PriorityGroup"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/AddTaskET"
                 app:layout_constraintTop_toBottomOf="@id/AddTaskET"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
                 android:hint="@string/date"
                 android:fontFamily="@font/louiscafe"
-                android:textSize="22sp"
+                android:textSize="24sp"
                 android:autofillHints="taskDescription"
                 android:inputType="date"
-                android:layout_marginHorizontal="10dp"
                 tools:ignore="VisualLintTextFieldSize" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

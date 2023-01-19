@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.reminderapp.R
@@ -45,6 +46,10 @@ class MainMenuActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        val navHostFragment = supportFragmentManager.findFragmentById(binding.FragContainer.id) as NavHostFragment
+        val navController = navHostFragment.navController
+        setupActionBarWithNavController(this, navController)
+        setupWithNavController(binding.NavigationView, navController)
         binding.NavigationView.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_logout -> {
