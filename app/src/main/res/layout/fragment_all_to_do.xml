@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".toDoMenus.AllToDoFragment"
-    android:background="@color/white">
+    style="@style/BG">
 
     <!-- TODO : improve responsivity -->
 
@@ -20,16 +20,18 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingStart="10dp"
+            tools:ignore="RtlSymmetry">
 
             <EditText
                 android:id="@+id/AddTaskET"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintWidth_percent=".95"
+                app:layout_constraintWidth_percent=".8"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/AddTaskET"
                 app:layout_constraintTop_toTopOf="parent"
                 android:hint="@string/new_task"
                 android:fontFamily="@font/louiscafe"
@@ -37,6 +39,17 @@
                 android:autofillHints="taskDescription"
                 android:inputType="textShortMessage"
                 tools:ignore="VisualLintTextFieldSize" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/AddTaskET"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_send"
+                style="@style/FAB"
+                android:contentDescription="@string/submit_desc" />
 
             <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
                 android:id="@+id/PriorityGroup"
@@ -49,28 +62,31 @@
                 app:justifyContent="center">
 
                 <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-                    android:id="@+id/btn1"
+                    android:id="@+id/highPriorityBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     app:toggle_text="@string/high"
                     app:toggle_selectedBackgroundColor="@color/red_blue"
-                    app:toggle_backgroundColor="@color/darkestwhite"/>
+                    style="@style/BTTN2"
+                    />
 
                 <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-                    android:id="@+id/btn2"
+                    android:id="@+id/middlePriorityBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     app:toggle_text="@string/mid"
                     app:toggle_selectedBackgroundColor="@color/main_blue"
-                    app:toggle_backgroundColor="@color/darkestwhite"/>
+                    style="@style/BTTN2"
+                    />
 
                 <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-                    android:id="@+id/btn3"
+                    android:id="@+id/lowPriorityBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     app:toggle_text="@string/low"
                     app:toggle_selectedBackgroundColor="@color/green_blue"
-                    app:toggle_backgroundColor="@color/darkestwhite"/>
+                    style="@style/BTTN2"
+                    />
 
             </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
 

@@ -20,8 +20,6 @@ class AllToDoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.PriorityGroup.setOnSelectListener {
-            Toast.makeText(context, it.text, Toast.LENGTH_SHORT).show()
-        }
+        binding.middlePriorityBtn.isSelected = true
     }
 }

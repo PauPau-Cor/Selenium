@@ -52,6 +52,7 @@
     <string name="mid">Media</string>
     <string name="high">Alta</string>
     <string name="date">Fecha</string>
+    <string name="submit_desc">Submit task</string>
 
 
 </resources>

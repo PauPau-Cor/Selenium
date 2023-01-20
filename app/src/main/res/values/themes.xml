@@ -35,6 +35,16 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="BTTN2">
+        <item name="toggle_backgroundColor">@color/darkestwhite</item>
+        <item name="toggle_textColor">@color/black</item>
+    </style>
+
+    <style name="FAB">
+        <item name="backgroundTint">@color/lightcolor</item>
+        <item name="tint">@color/black</item>
+    </style>
+
     <style name="TOLBR">
         <item name="android:background">@color/darkestwhite</item>
     </style>
