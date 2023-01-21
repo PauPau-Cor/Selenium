@@ -12,8 +12,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/AddTaskCard"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent=".18"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/TasksRV"
         style="@style/CRDMENU">
@@ -22,9 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingStart="10dp"
+            android:paddingVertical="5dp"
             tools:ignore="RtlSymmetry">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/AddTaskET"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -34,32 +34,42 @@
                 app:layout_constraintEnd_toStartOf="@id/AddTaskET"
                 app:layout_constraintTop_toTopOf="parent"
                 android:hint="@string/new_task"
-                android:fontFamily="@font/louiscafe"
-                android:textSize="25sp"
-                android:autofillHints="taskDescription"
-                android:inputType="textShortMessage"
-                tools:ignore="VisualLintTextFieldSize" />
+                style="@style/outlinedTextInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:textSize="20sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textShortMessage"
+                    android:fontFamily="@font/louiscafe"
+                    style="@style/TXT"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                style="@style/FAB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/AddTaskET"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/submit_desc"
                 android:src="@drawable/ic_send"
-                style="@style/FAB"
-                android:contentDescription="@string/submit_desc" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/AddTaskET"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ImageContrastCheck" />
 
             <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
                 android:id="@+id/PriorityGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@id/AddTaskET"
-                app:layout_constraintEnd_toStartOf="@id/AddTaskDate"
                 app:layout_constraintTop_toBottomOf="@id/AddTaskET"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:justifyContent="center">
+                app:justifyContent="center"
+                app:toggle_selectableAmount="1"
+                app:toggle_requiredAmount="1">
 
                 <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                     android:id="@+id/highPriorityBtn"
@@ -67,6 +77,7 @@
                     android:layout_height="50dp"
                     app:toggle_text="@string/high"
                     app:toggle_selectedBackgroundColor="@color/red_blue"
+                    app:toggle_textSize="17sp"
                     style="@style/BTTN2"
                     />
 
@@ -76,6 +87,7 @@
                     android:layout_height="50dp"
                     app:toggle_text="@string/mid"
                     app:toggle_selectedBackgroundColor="@color/main_blue"
+                    app:toggle_textSize="17sp"
                     style="@style/BTTN2"
                     />
 
@@ -84,27 +96,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     app:toggle_text="@string/low"
+                    app:toggle_textSize="17sp"
                     app:toggle_selectedBackgroundColor="@color/green_blue"
                     style="@style/BTTN2"
                     />
 
             </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
 
-            <EditText
-                android:id="@+id/AddTaskDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/PriorityGroup"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/AddTaskMore"
+                style="@style/BTTN2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:layout_marginHorizontal="5dp"
+                android:contentDescription="@string/advanced_settings"
+                app:icon="@drawable/ic_more"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="35dp"
                 app:layout_constraintEnd_toEndOf="@id/AddTaskET"
-                app:layout_constraintTop_toBottomOf="@id/AddTaskET"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginStart="10dp"
-                android:hint="@string/date"
-                android:fontFamily="@font/louiscafe"
-                android:textSize="24sp"
-                android:autofillHints="taskDescription"
-                android:inputType="date"
-                tools:ignore="VisualLintTextFieldSize" />
+                app:layout_constraintTop_toTopOf="@id/PriorityGroup"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

@@ -5,15 +5,15 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.reminderapp.R
 import com.example.reminderapp.authMenus.LoginActivity
 import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.databinding.ActivityMainMenuBinding
 import com.example.reminderapp.models.UserModel
+import com.example.reminderapp.toDoMenus.AllToDoFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class MainMenuActivity : AppCompatActivity() {
@@ -21,15 +21,15 @@ class MainMenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainMenuBinding
     private lateinit var toggle : ActionBarDrawerToggle
     private lateinit var mAuth : FirebaseAuth
-
+    private lateinit var userModel : UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mAuth = FirebaseAuth.getInstance()
-        val userModel : UserModel? = intent.getParcelableExtra<UserModel>(Constants.PutExUser)
-
+        @Suppress("DEPRECATION")
+        userModel = intent.getParcelableExtra(Constants.PutExUser)!!
         drawerInit()
     }
 
@@ -46,19 +46,29 @@ class MainMenuActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        val navHostFragment = supportFragmentManager.findFragmentById(binding.FragContainer.id) as NavHostFragment
-        val navController = navHostFragment.navController
-        setupActionBarWithNavController(this, navController)
-        setupWithNavController(binding.NavigationView, navController)
+
+        binding.NavigationView.setCheckedItem(R.id.nav_feed)
+        showFragment(HomeFragment.newInstance(userModel))
+
         binding.NavigationView.setNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.nav_logout -> {
-                    signOut()
-                    return@setNavigationItemSelectedListener false
+            binding.DrawerLayout.closeDrawers()
+            binding.DrawerLayout.postDelayed({
+                when(it.itemId){
+                    R.id.nav_tasks -> showFragment(AllToDoFragment.newInstance(userModel))
+                    R.id.nav_feed -> showFragment(HomeFragment.newInstance(userModel))
+                    R.id.nav_logout -> {
+                        signOut()
+                    }
                 }
-            }
+            }, 240)
             true
         }
+    }
+
+    private fun showFragment(fragmentToShow : Fragment){
+        val fragmentTransaction : FragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.FragContainer.id, fragmentToShow)
+        fragmentTransaction.commit()
     }
 
     private fun signOut() {

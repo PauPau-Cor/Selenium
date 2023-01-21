@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
     </style>
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
@@ -38,11 +39,29 @@
     <style name="BTTN2">
         <item name="toggle_backgroundColor">@color/darkestwhite</item>
         <item name="toggle_textColor">@color/black</item>
+        <item name="toggle_fontFamily">"/fonts/louiscafebold.ttf"</item>
+        <item name="android:fontFamily">@font/louiscafebold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="backgroundTint">@color/darkestwhite</item>
+        <item name="iconTint">@color/black</item>
     </style>
 
     <style name="FAB">
         <item name="backgroundTint">@color/lightcolor</item>
         <item name="tint">@color/black</item>
+        <item name="iconTint">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="CRDDIALOG" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.MediumComponent</item>
+    </style>
+
+    <style name="ShapeAppearance.App.MediumComponent" parent="">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">10dp</item>
     </style>
 
     <style name="TOLBR">
@@ -71,10 +90,17 @@
         <item name="android:background">@color/darkerwhite</item>
     </style>
 
+    <!-- TODO: what's up with this lol -->
     <style name="outlinedTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/text_field_light</item>
         <item name="android:textColorHint">@color/text_field_light</item>
         <item name="passwordToggleTint">@color/black</item>
         <item name="colorPrimary">@color/darkestwhite</item>
+    </style>
+
+    <style name="outlinedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/text_field_dark</item>
+        <item name="android:textColorHint">@color/text_field_dark</item>
+        <item name="passwordToggleTint">@color/text_field_dark</item>
     </style>
 </resources>

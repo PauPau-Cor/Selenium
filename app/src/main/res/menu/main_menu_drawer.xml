@@ -12,6 +12,7 @@
 
         <item android:title="@string/tasks">
             <menu>
+                <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_tasks"
                     android:icon="@drawable/ic_tasks"
@@ -24,11 +25,13 @@
                     android:id="@+id/nav_done_tasks"
                     android:icon="@drawable/ic_done"
                     android:title="@string/done_tasks" />
+                </group>
             </menu>
         </item>
 
         <item android:title="@string/calendar">
             <menu>
+                <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/nav_months"
                     android:icon="@drawable/ic_calendar_month"
@@ -41,14 +44,17 @@
                     android:id="@+id/nav_days"
                     android:icon="@drawable/ic_calendar_day"
                     android:title="@string/calendar_days" />
+                </group>
             </menu>
         </item>
         <item android:title="@string/account">
             <menu>
+                <group android:checkableBehavior="none">
                 <item
                     android:id="@+id/nav_logout"
                     android:icon="@drawable/ic_logout"
                     android:title="@string/logout" />
+                </group>
             </menu>
         </item>
     </group>
