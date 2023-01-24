@@ -53,6 +53,15 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="TABSLYT">
+        <item name="android:background">@color/darkerblack</item>
+    </style>
+
+    <style name="CRD" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/darkerblack</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.MediumComponent</item>
+    </style>
+
     <style name="CRDDIALOG" parent="Widget.Material3.CardView.Elevated">
         <item name="cardBackgroundColor">@color/black</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.MediumComponent</item>
@@ -65,6 +74,12 @@
 
     <style name="TOLBR">
         <item name="android:background">@color/darkestblack</item>
+    </style>
+
+    <style name="TOLBTTXT" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">30sp</item>
+        <item name="android:fontFamily">@font/planner</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="DRWRHDR">
@@ -99,5 +114,14 @@
         <item name="boxStrokeColor">@color/text_field_dark</item>
         <item name="android:textColorHint">@color/text_field_dark</item>
         <item name="passwordToggleTint">@color/text_field_dark</item>
+    </style>
+
+    <style name="DropdownTXT" parent="TXT">
+        <item name="android:popupBackground">@drawable/background_dropdown_menu_light</item>
+    </style>
+
+    <style name="DropdownMenuItem" parent="TextAppearance.AppCompat.Widget.DropDownItem">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/louiscafebold</item>
     </style>
 </resources>

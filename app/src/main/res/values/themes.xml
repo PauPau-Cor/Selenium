@@ -54,6 +54,23 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="FABBigger" parent="Widget.Material3.FloatingActionButton.Large.Tertiary">
+        <item name="backgroundTint">@color/lightcolor</item>
+        <item name="tint">@color/black</item>
+        <item name="iconTint">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TABSLYT">
+        <item name="android:background">@color/darkerwhite</item>
+    </style>
+
+
+    <style name="CRD" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/darkerwhite</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.MediumComponent</item>
+    </style>
+
     <style name="CRDDIALOG" parent="Widget.Material3.CardView.Elevated">
         <item name="cardBackgroundColor">@color/white</item>
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.MediumComponent</item>
@@ -66,6 +83,13 @@
 
     <style name="TOLBR">
         <item name="android:background">@color/darkestwhite</item>
+    </style>
+
+    <style name="TOLBTTXT" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">30sp</item>
+        <item name="android:fontFamily">@font/planner</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="DRWRHDR">
@@ -99,8 +123,18 @@
     </style>
 
     <style name="outlinedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-        <item name="boxStrokeColor">@color/text_field_dark</item>
-        <item name="android:textColorHint">@color/text_field_dark</item>
-        <item name="passwordToggleTint">@color/text_field_dark</item>
+        <item name="boxStrokeColor">@color/text_field_light</item>
+        <item name="android:textColorHint">@color/text_field_light</item>
+        <item name="endIconTint">@color/text_field_light</item>
+        <item name="colorPrimary">@color/black</item>
+    </style>
+
+    <style name="DropdownTXT" parent="TXT">
+        <item name="android:popupBackground">@drawable/background_dropdown_menu_light</item>
+    </style>
+
+    <style name="DropdownMenuItem" parent="TextAppearance.AppCompat.Widget.DropDownItem">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/louiscafebold</item>
     </style>
 </resources>

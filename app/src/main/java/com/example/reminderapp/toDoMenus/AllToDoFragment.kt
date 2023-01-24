@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.databinding.FragmentAllToDoBinding
 import com.example.reminderapp.generalUtilities.DialogMaker
@@ -48,7 +49,7 @@ class AllToDoFragment : Fragment() {
         }
 
         binding.AddTaskMore.setOnClickListener{
-            dialogMaker.advancedTask(requireContext(), binding.AddTaskET.editText!!.text.toString(), "", priorityValue)
+            dialogMaker.advancedTask(requireContext(), userModel, binding.AddTaskET.editText!!.text.toString(), "", priorityValue)
         }
     }
 

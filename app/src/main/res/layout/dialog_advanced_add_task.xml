@@ -7,7 +7,7 @@
 
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="390dp"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
             style="@style/CRDDIALOG"
             android:layout_centerInParent="true"
@@ -132,7 +132,8 @@
                         android:inputType="none"
                         android:fontFamily="@font/louiscafe"
                         style="@style/TXT"
-                        tools:ignore="LabelFor" />
+                        tools:ignore="LabelFor"
+                        android:popupBackground="@drawable/background_dropdown_menu_light"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 

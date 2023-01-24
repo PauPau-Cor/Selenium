@@ -5,8 +5,7 @@ import kotlinx.parcelize.Parcelize
 import com.google.firebase.firestore.DocumentId
 
 @Parcelize
-data class TaskModel(
-    @DocumentId val taskID: String? = null,
+data class CategoryModel(
+    @DocumentId val categoryID: String? = null,
     val userID: String = "",
-    val title : String = "",
-    val date : String = "") : Parcelable
+    val title : String = "") : Parcelable

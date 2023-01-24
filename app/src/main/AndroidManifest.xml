@@ -15,27 +15,31 @@
         android:theme="@style/Theme.ReminderApp"
         tools:targetApi="31">
         <activity
+            android:name=".toDoMenus.AddEditToDoActivity"
+            android:exported="false" />
+        <activity
             android:name=".generalMenus.MainMenuActivity"
-            android:exported="false"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
         <activity
             android:name=".authMenus.ForgotPassActivity"
-            android:exported="false"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
         <activity
             android:name=".authMenus.SignInActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".authMenus.LoginActivity"
-            android:exported="false"
-            android:configChanges="orientation|screenSize"/>
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
         <activity
             android:name=".generalMenus.InitActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:theme="@style/Theme.App.Starting"
-            android:configChanges="orientation|screenSize">
+            android:theme="@style/Theme.App.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

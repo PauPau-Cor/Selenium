@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".toDoMenus.AddEditToDoActivity"
+    style="@style/BG">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/ToolbarLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/TOLBR">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="@color/main_blue"
+            app:menu="@menu/add_edit_to_do_menu"
+            app:title="@string/add_task"
+            app:titleCentered="true"
+            app:titleTextColor="@color/main_blue"
+            app:titleTextAppearance="@style/TOLBTTXT">
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/ToolbarLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="15dp">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/TaskTitle"
+            android:hint="@string/title"
+            style="@style/outlinedTextInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textShortMessage"
+                android:fontFamily="@font/louiscafe"
+                style="@style/TXT"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <!--<com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/TaskFolder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/TaskTime"
+            app:endIconDrawable="@drawable/ic_calendar_month"
+            app:endIconMode="custom"
+            android:id="@+id/TaskDate"
+            android:hint="@string/date"
+            android:layout_marginEnd="5dp"
+            style="@style/outlinedTextInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:fontFamily="@font/louiscafe"
+                style="@style/TXT"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/TaskFolder"
+            app:layout_constraintStart_toEndOf="@id/TaskDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/TaskTime"
+            android:hint="@string/time"
+            app:endIconDrawable="@drawable/ic_clock"
+            app:endIconMode="custom"
+            style="@style/outlinedTextInputLayout"
+            android:layout_marginStart="5dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="time"
+                android:fontFamily="@font/louiscafe"
+                style="@style/TXT"/>
+
+        </com.google.android.material.textfield.TextInputLayout>-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/TaskTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:endIconDrawable="@drawable/ic_folder"
+            app:endIconMode="dropdown_menu"
+            android:id="@+id/TaskFolder"
+            android:hint="@string/category"
+            style="@style/outlinedDropdownMenu">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:fontFamily="@font/louiscafe"
+                style="@style/TXT"
+                tools:ignore="LabelFor"
+                android:popupBackground="@drawable/background_dropdown_menu_light"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/priorityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/priority"
+            android:fontFamily="@font/planner"
+            android:textStyle="bold"
+            style="@style/TXT"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/TaskFolder"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="15sp"/>
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+            android:id="@+id/PriorityGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/priorityLabel"
+            android:layout_marginTop="2dp"
+            app:justifyContent="center"
+            app:toggle_selectableAmount="1"
+            app:toggle_requiredAmount="1">
+
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:id="@+id/highPriorityBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                app:toggle_text="@string/high"
+                app:toggle_selectedBackgroundColor="@color/red_blue"
+                app:toggle_textSize="15sp"
+                style="@style/BTTN2"
+                />
+
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:id="@+id/middlePriorityBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                app:toggle_text="@string/mid"
+                app:toggle_selectedBackgroundColor="@color/main_blue"
+                app:toggle_textSize="15sp"
+                style="@style/BTTN2"
+                />
+
+            <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                android:id="@+id/lowPriorityBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                app:toggle_text="@string/low"
+                app:toggle_selectedBackgroundColor="@color/green_blue"
+                app:toggle_textSize="15sp"
+                style="@style/BTTN2"
+                />
+
+        </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            style="@style/CRD"
+            app:layout_constraintTop_toBottomOf="@id/PriorityGroup"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/timeDefinition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    style="@style/TABSLYT">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Indefinida"
+                        android:icon="@drawable/ic_no_event"
+                        />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Definida"
+                        android:icon="@drawable/ic_event"
+                        />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Repetida"
+                        android:icon="@drawable/ic_event_repeat"
+                        />
+                </com.google.android.material.tabs.TabLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="300dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/timeDefinition"
+                    android:background="@drawable/background_frame_layout"
+                    android:backgroundTint="@color/darkestwhite"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_send"
+            app:fabCustomSize="60dp"
+            style="@style/FAB"
+            android:contentDescription="@string/submit_desc"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
