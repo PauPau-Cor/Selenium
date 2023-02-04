@@ -32,7 +32,9 @@ class DialogMaker {
         dialog.setContentView(dialogBinding.root)
         setupDropdownOptions(dialogBinding, userModel, context)
         dialogBinding.TaskTitle.editText!!.setText(title)
-        dialogBinding.TaskDate.editText!!.setText(date)
+        setupTabLayout(dialogBinding);
+
+
         when(priority){
             0 -> dialogBinding.PriorityGroup.selectButton(R.id.lowPriorityBtn)
             1 -> dialogBinding.PriorityGroup.selectButton(R.id.middlePriorityBtn)
@@ -42,6 +44,11 @@ class DialogMaker {
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun setupTabLayout(dialogBinding: DialogAdvancedAddTaskBinding) {
+        dialogBinding.timeDefinition.setupWithViewPager(dialogBinding.viewPager);
+        val viewPagerAdapter = ViewPagerAdapter()
     }
 
     //TODO: handle no connection situation

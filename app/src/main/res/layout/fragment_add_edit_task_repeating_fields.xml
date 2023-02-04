@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".toDoMenus.AddEditTaskRepeatingFields">
+
+    <!-- TODO: Rename IDs-->
+
+    <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+        android:id="@+id/WeekGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="2dp"
+        app:justifyContent="center"
+        app:toggle_selectableAmount="1"
+        app:toggle_requiredAmount="1">
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/highPriorityBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:toggle_text="L"
+            app:toggle_selectedBackgroundColor="@color/red_blue"
+            app:toggle_textSize="15sp"
+            style="@style/BTTN2"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/woas"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:toggle_text="M"
+            app:toggle_selectedBackgroundColor="@color/main_blue"
+            app:toggle_textSize="15sp"
+            style="@style/BTTN2"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/lowPriorityBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:toggle_text="I"
+            app:toggle_selectedBackgroundColor="@color/green_blue"
+            app:toggle_textSize="15sp"
+            style="@style/BTTN2"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/lwe"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:toggle_text="J"
+            app:toggle_selectedBackgroundColor="@color/green_blue"
+            app:toggle_textSize="15sp"
+            style="@style/BTTN2"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/waaa"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:toggle_text="V"
+            app:toggle_selectedBackgroundColor="@color/green_blue"
+            app:toggle_textSize="15sp"
+            style="@style/BTTN2"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/wkmj"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:toggle_text="S"
+            app:toggle_selectedBackgroundColor="@color/green_blue"
+            app:toggle_textSize="15sp"
+            style="@style/BTTN2"
+            />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/ksan"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:toggle_text="D"
+            app:toggle_selectedBackgroundColor="@color/green_blue"
+            app:toggle_textSize="15sp"
+            style="@style/BTTN2"
+            />
+    </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
