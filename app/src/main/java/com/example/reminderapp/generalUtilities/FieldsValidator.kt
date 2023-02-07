@@ -28,7 +28,7 @@ class FieldsValidator {
             return false
         }
 
-        val passRegex = Regex("""^(?=.*[0-9])(?=.*[A-ZÑ])(?=.*[a-zñ]).{8,}$""")
+        val passRegex = Regex("""^(?=.*\d)(?=.*[A-ZÑ])(?=.*[a-zñ]).{8,}$""")
         if(!(passRegex matches Pass.editText!!.text)){
             Pass setError context.getString(R.string.err_pass_not_secure)
             return false

@@ -4,8 +4,13 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
 
-    <color name="main_blue">#53728E</color>
+
     <color name="red_blue">#3C3F7A</color>
+    <color name="midpoint_red_main">#445081</color>
+    <color name="midpoint_main_red">#4B6187</color>
+    <color name="main_blue">#53728E</color>
+    <color name="midpoint_main_green">#5A8393</color>
+    <color name="midpoint_green_main">#629499</color>
     <color name="green_blue">#69A59E</color>
 
     <color name="white">#ECEFF6</color>

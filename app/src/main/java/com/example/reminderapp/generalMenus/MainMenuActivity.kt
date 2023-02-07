@@ -28,6 +28,7 @@ class MainMenuActivity : AppCompatActivity() {
         binding = ActivityMainMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mAuth = FirebaseAuth.getInstance()
+        //Using deprecated because newer solution requires API33.
         @Suppress("DEPRECATION")
         userModel = intent.getParcelableExtra(Constants.PutExUser)!!
         drawerInit()

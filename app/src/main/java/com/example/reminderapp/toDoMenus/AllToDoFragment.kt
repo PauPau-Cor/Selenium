@@ -49,7 +49,7 @@ class AllToDoFragment : Fragment() {
         }
 
         binding.AddTaskMore.setOnClickListener{
-            dialogMaker.advancedTask(requireContext(), userModel, binding.AddTaskET.editText!!.text.toString(), "", priorityValue)
+            dialogMaker.advancedTask(requireContext(), this, userModel, binding.AddTaskET.editText!!.text.toString(), "", priorityValue)
         }
     }
 

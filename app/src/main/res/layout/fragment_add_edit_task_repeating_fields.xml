@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".toDoMenus.AddEditTaskRepeatingFields">
 
@@ -17,79 +18,101 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="2dp"
         app:justifyContent="center"
-        app:toggle_selectableAmount="1"
+        app:toggle_horizontalSpacing="5dp"
+        app:toggle_selectableAmount="7"
         app:toggle_requiredAmount="1">
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-            android:id="@+id/highPriorityBtn"
+            android:id="@+id/mondayBT"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             app:toggle_text="L"
             app:toggle_selectedBackgroundColor="@color/red_blue"
-            app:toggle_textSize="15sp"
+            app:toggle_textSize="12sp"
             style="@style/BTTN2"
             />
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-            android:id="@+id/woas"
+            android:id="@+id/tuesdayBT"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             app:toggle_text="M"
-            app:toggle_selectedBackgroundColor="@color/main_blue"
-            app:toggle_textSize="15sp"
+            app:toggle_selectedBackgroundColor="@color/midpoint_red_main"
+            app:toggle_textSize="12sp"
             style="@style/BTTN2"
             />
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-            android:id="@+id/lowPriorityBtn"
+            android:id="@+id/wednesdayBT"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             app:toggle_text="I"
-            app:toggle_selectedBackgroundColor="@color/green_blue"
-            app:toggle_textSize="15sp"
+            app:toggle_selectedBackgroundColor="@color/midpoint_main_red"
+            app:toggle_textSize="12sp"
             style="@style/BTTN2"
             />
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-            android:id="@+id/lwe"
+            android:id="@+id/thursdayBT"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             app:toggle_text="J"
-            app:toggle_selectedBackgroundColor="@color/green_blue"
-            app:toggle_textSize="15sp"
+            app:toggle_selectedBackgroundColor="@color/main_blue"
+            app:toggle_textSize="12sp"
             style="@style/BTTN2"
             />
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-            android:id="@+id/waaa"
+            android:id="@+id/fridayBT"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             app:toggle_text="V"
-            app:toggle_selectedBackgroundColor="@color/green_blue"
-            app:toggle_textSize="15sp"
+            app:toggle_selectedBackgroundColor="@color/midpoint_main_green"
+            app:toggle_textSize="12sp"
             style="@style/BTTN2"
             />
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-            android:id="@+id/wkmj"
+            android:id="@+id/saturdayBT"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             app:toggle_text="S"
-            app:toggle_selectedBackgroundColor="@color/green_blue"
-            app:toggle_textSize="15sp"
+            app:toggle_selectedBackgroundColor="@color/midpoint_green_main"
+            app:toggle_textSize="12sp"
             style="@style/BTTN2"
             />
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
-            android:id="@+id/ksan"
+            android:id="@+id/sundayBT"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             app:toggle_text="D"
             app:toggle_selectedBackgroundColor="@color/green_blue"
-            app:toggle_textSize="15sp"
+            app:toggle_textSize="12sp"
             style="@style/BTTN2"
             />
     </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/WeekGroup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/TaskTime"
+        android:hint="@string/time"
+        app:endIconDrawable="@drawable/ic_clock"
+        app:endIconMode="custom"
+        style="@style/outlinedTextInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="time"
+            android:fontFamily="@font/louiscafe"
+            style="@style/TXT"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

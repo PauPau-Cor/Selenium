@@ -56,10 +56,14 @@
     <string name="advanced_settings">Configuración avanzada</string>
     <string name="add_task">Añadir tarea</string>
     <string name="title">Titulo</string>
-    <string name="priority">Prioridad:</string>
+    <string name="priority">Prioridad</string>
     <string name="add">Añadir</string>
     <string name="time">Hora</string>
     <string name="category">Categoria</string>
     <string name="no_folder">Default</string>
+    <string name="no_options">No hay opciones disponibles</string>
+    <string name="time_undefined">Indefinida</string>
+    <string name="time_defined">Definida</string>
+    <string name="time_repetitive">Repetida</string>
 
 </resources>

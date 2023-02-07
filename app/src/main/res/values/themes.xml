@@ -63,6 +63,15 @@
 
     <style name="TABSLYT">
         <item name="android:background">@color/darkerwhite</item>
+        <item name="tabTextAppearance">@style/TABSTXT</item>
+    </style>
+
+    <style name="TABSTXT">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/planner</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
 
