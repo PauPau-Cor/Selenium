@@ -1,21 +1,29 @@
 package com.example.reminderapp.toDoMenus
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.Fragment
+import com.example.reminderapp.adapters.SimpleTasksAdapter
 import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.databinding.FragmentAllToDoBinding
 import com.example.reminderapp.generalUtilities.DialogMaker
+import com.example.reminderapp.generalUtilities.WrappedLinearLayoutManager
+import com.example.reminderapp.models.TaskModel
 import com.example.reminderapp.models.UserModel
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.transition.MaterialSharedAxis
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class AllToDoFragment : Fragment() {
 
     private lateinit var binding : FragmentAllToDoBinding
     private lateinit var userModel : UserModel
+    private var priorityValue : Int = 1
+    private lateinit var db: FirebaseFirestore
+    private lateinit var adapter: SimpleTasksAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +33,7 @@ class AllToDoFragment : Fragment() {
         }
         exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward = */ true).setDuration(650)
         reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward = */ false).setDuration(650)
+        db = FirebaseFirestore.getInstance()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -36,9 +45,21 @@ class AllToDoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.PriorityGroup.selectButton(binding.middlePriorityBtn.id)
 
-        val dialogMaker = DialogMaker()
+        setUpAddTaskMenu()
+        setUpRV()
+    }
 
-        var priorityValue : Int = 1
+    private fun setUpRV() {
+        val query: Query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID)
+        val options = FirestoreRecyclerOptions.Builder<TaskModel>()
+            .setQuery(query, TaskModel::class.java).setLifecycleOwner(this).build()
+        adapter = SimpleTasksAdapter(options)
+        binding.TasksRV.adapter = adapter
+        binding.TasksRV.layoutManager = WrappedLinearLayoutManager(requireContext())
+    }
+
+    private fun setUpAddTaskMenu() {
+        val dialogMaker = DialogMaker()
 
         binding.PriorityGroup.setOnSelectListener {
             when(it){
@@ -51,6 +72,26 @@ class AllToDoFragment : Fragment() {
         binding.AddTaskMore.setOnClickListener{
             dialogMaker.advancedTask(requireContext(), this, userModel, binding.AddTaskET.editText!!.text.toString(), "", priorityValue)
         }
+
+        binding.AddTaskBT.setOnClickListener{
+            createNewTask()
+        }
+    }
+
+    private fun createNewTask() {
+        val title : String = binding.AddTaskET.editText?.text.toString()
+        val newTask = TaskModel(userID = userModel.userID!!, title = title, priority = priorityValue)
+        db.collection(Constants.TasksCollection).add(newTask)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        adapter.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.stopListening()
     }
 
     companion object {
