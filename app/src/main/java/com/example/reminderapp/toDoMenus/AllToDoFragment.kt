@@ -51,6 +51,7 @@ class AllToDoFragment : Fragment() {
 
     private fun setUpRV() {
         val query: Query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID)
+            .whereIn(Constants.progressField, listOf(0, 1)).orderBy(Constants.priorityField, Query.Direction.DESCENDING)
         val options = FirestoreRecyclerOptions.Builder<TaskModel>()
             .setQuery(query, TaskModel::class.java).setLifecycleOwner(this).build()
         adapter = SimpleTasksAdapter(options)

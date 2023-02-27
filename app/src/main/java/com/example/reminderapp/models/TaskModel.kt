@@ -9,6 +9,7 @@ data class TaskModel(
     @DocumentId val taskID: String? = null,
     val userID: String = "",
     val title : String = "",
+    val progress : Int = 0,
     val categoryID : String = "",
     val priority : Int = 0,
     val dueType : Int = 0,
