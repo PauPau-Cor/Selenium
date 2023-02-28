@@ -14,6 +14,7 @@ import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.databinding.ActivityMainMenuBinding
 import com.example.reminderapp.models.UserModel
 import com.example.reminderapp.toDoMenus.AllToDoFragment
+import com.example.reminderapp.toDoMenus.DoneTasksFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class MainMenuActivity : AppCompatActivity() {
@@ -55,8 +56,9 @@ class MainMenuActivity : AppCompatActivity() {
             binding.DrawerLayout.closeDrawers()
             binding.DrawerLayout.postDelayed({
                 when(it.itemId){
-                    R.id.nav_tasks -> showFragment(AllToDoFragment.newInstance(userModel))
                     R.id.nav_feed -> showFragment(HomeFragment.newInstance(userModel))
+                    R.id.nav_tasks -> showFragment(AllToDoFragment.newInstance(userModel))
+                    R.id.nav_done_tasks -> showFragment(DoneTasksFragment.newInstance(userModel))
                     R.id.nav_logout -> {
                         signOut()
                     }

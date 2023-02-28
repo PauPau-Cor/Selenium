@@ -31,8 +31,8 @@ class AllToDoFragment : Fragment() {
             @Suppress("DEPRECATION")
             userModel = it.getParcelable(Constants.PutExUser)!!
         }
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward = */ true).setDuration(650)
-        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, /* forward = */ false).setDuration(650)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).setDuration(650)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false).setDuration(650)
         db = FirebaseFirestore.getInstance()
     }
 
@@ -51,7 +51,8 @@ class AllToDoFragment : Fragment() {
 
     private fun setUpRV() {
         val query: Query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID)
-            .whereIn(Constants.progressField, listOf(0, 1)).orderBy(Constants.priorityField, Query.Direction.DESCENDING)
+            .whereNotEqualTo(Constants.progressField, 2).orderBy(Constants.progressField, Query.Direction.DESCENDING)
+            .orderBy(Constants.categoryIDField).orderBy(Constants.priorityField, Query.Direction.DESCENDING)
         val options = FirestoreRecyclerOptions.Builder<TaskModel>()
             .setQuery(query, TaskModel::class.java).setLifecycleOwner(this).build()
         adapter = SimpleTasksAdapter(options)
@@ -83,6 +84,9 @@ class AllToDoFragment : Fragment() {
         val title : String = binding.AddTaskET.editText?.text.toString()
         val newTask = TaskModel(userID = userModel.userID!!, title = title, priority = priorityValue)
         db.collection(Constants.TasksCollection).add(newTask)
+        binding.AddTaskET.editText!!.setText("")
+        binding.PriorityGroup.selectButtonWithAnimation(binding.middlePriorityBtn.id)
+        priorityValue = 1
     }
 
     override fun onStart() {

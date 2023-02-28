@@ -11,5 +11,6 @@ object Constants {
 
     const val TasksCollection = "tasks"
     const val priorityField = "priority"
+    const val categoryIDField = "categoryID"
     const val progressField = "progress"
 }

@@ -18,13 +18,13 @@
                     android:icon="@drawable/ic_tasks"
                     android:title="@string/all_tasks" />
                 <item
-                    android:id="@+id/nav_not_done_tasks"
-                    android:icon="@drawable/ic_not_done"
-                    android:title="@string/not_done_tasks" />
-                <item
                     android:id="@+id/nav_done_tasks"
                     android:icon="@drawable/ic_done"
                     android:title="@string/done_tasks" />
+                <item
+                    android:id="@+id/nav_not_done_tasks"
+                    android:icon="@drawable/ic_not_done"
+                    android:title="@string/not_done_tasks" />
                 </group>
             </menu>
         </item>

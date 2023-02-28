@@ -29,7 +29,8 @@ class SimpleTasksAdapter(options : FirestoreRecyclerOptions<TaskModel>) : Firest
         if(model.categoryID.isBlank()){
             holder.taskCategory.setText(R.string.no_folder)
         }else{
-            TODO("Look up different categories")
+            holder.taskCategory.text = model.categoryID
+            //TODO("Look up different categories")
         }
 
         when(model.priority){
@@ -44,6 +45,10 @@ class SimpleTasksAdapter(options : FirestoreRecyclerOptions<TaskModel>) : Firest
             }
         }
 
+        if(model.progress == 1){
+            holder.taskProgressIndicator.visibility = View.VISIBLE
+        }
+
         holder.taskDone.setOnClickListener{
             db = FirebaseFirestore.getInstance()
             db.collection(Constants.TasksCollection).document(model.taskID!!).update(Constants.progressField, 2)
@@ -56,4 +61,5 @@ class TasksViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     val taskCategory : TextView = itemView.findViewById(R.id.TaskCategory)
     val taskPriority : ImageView = itemView.findViewById(R.id.PriorityIndicator)
     val taskDone : ImageView= itemView.findViewById(R.id.doneBtn)
+    val taskProgressIndicator : ImageView = itemView.findViewById(R.id.ProgressIndicator)
 }
