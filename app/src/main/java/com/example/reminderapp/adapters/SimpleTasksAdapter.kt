@@ -47,6 +47,8 @@ class SimpleTasksAdapter(options : FirestoreRecyclerOptions<TaskModel>) : Firest
 
         if(model.progress == 1){
             holder.taskProgressIndicator.visibility = View.VISIBLE
+        }else{
+            holder.taskProgressIndicator.visibility = View.GONE
         }
 
         holder.taskDone.setOnClickListener{

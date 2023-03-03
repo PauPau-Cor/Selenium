@@ -21,6 +21,7 @@
                 app:layout_constraintEnd_toStartOf="@id/doneBtn"
                 app:tint="@color/darkestwhite"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:src="@drawable/ic_wip"
                 android:visibility="gone"
                 android:contentDescription="@string/task_in_progress_indicator"/>

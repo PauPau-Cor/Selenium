@@ -82,6 +82,9 @@ class AllToDoFragment : Fragment() {
 
     private fun createNewTask() {
         val title : String = binding.AddTaskET.editText?.text.toString()
+        if(title.isBlank()){
+            return
+        }
         val newTask = TaskModel(userID = userModel.userID!!, title = title, priority = priorityValue)
         db.collection(Constants.TasksCollection).add(newTask)
         binding.AddTaskET.editText!!.setText("")
