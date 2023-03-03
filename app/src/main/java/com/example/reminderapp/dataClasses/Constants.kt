@@ -13,4 +13,5 @@ object Constants {
     const val priorityField = "priority"
     const val categoryIDField = "categoryID"
     const val progressField = "progress"
+    const val dateFinishedField = "dateFinished"
 }

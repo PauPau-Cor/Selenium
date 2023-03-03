@@ -12,6 +12,7 @@ import com.example.reminderapp.models.TaskModel
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Date
 
 class SimpleTasksAdapter(options : FirestoreRecyclerOptions<TaskModel>) : FirestoreRecyclerAdapter<TaskModel, TasksViewHolder>(options) {
 
@@ -25,13 +26,7 @@ class SimpleTasksAdapter(options : FirestoreRecyclerOptions<TaskModel>) : Firest
 
     override fun onBindViewHolder(holder: TasksViewHolder, position: Int, model: TaskModel) {
         holder.taskTitle.text = model.title
-
-        if(model.categoryID.isBlank()){
-            holder.taskCategory.setText(R.string.no_folder)
-        }else{
-            holder.taskCategory.text = model.categoryID
-            //TODO("Look up different categories")
-        }
+        holder.taskCategory.text = model.categoryName
 
         when(model.priority){
             0 ->{
@@ -53,7 +48,7 @@ class SimpleTasksAdapter(options : FirestoreRecyclerOptions<TaskModel>) : Firest
 
         holder.taskDone.setOnClickListener{
             db = FirebaseFirestore.getInstance()
-            db.collection(Constants.TasksCollection).document(model.taskID!!).update(Constants.progressField, 2)
+            db.collection(Constants.TasksCollection).document(model.taskID!!).update(Constants.progressField, 2, Constants.dateFinishedField, Date())
         }
     }
 }

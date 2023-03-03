@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/TasksRV"
-        style="@style/CRDMENU">
+        app:cardBackgroundColor="@color/darkerwhite">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -28,10 +28,9 @@
                 android:id="@+id/AddTaskET"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintWidth_percent=".8"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/AddTaskET"
+                app:layout_constraintEnd_toStartOf="@id/AddTaskBT"
                 app:layout_constraintTop_toTopOf="parent"
                 android:hint="@string/new_task"
                 style="@style/outlinedTextInputLayout">
@@ -54,6 +53,8 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/submit_desc"
                 android:src="@drawable/ic_send"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/AddTaskET"
@@ -131,7 +132,6 @@
         android:id="@+id/TasksRV"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingHorizontal="15dp"
         app:layout_constraintTop_toBottomOf="@+id/AddTaskCard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -23,8 +23,8 @@
                     android:title="@string/done_tasks" />
                 <item
                     android:id="@+id/nav_not_done_tasks"
-                    android:icon="@drawable/ic_not_done"
-                    android:title="@string/not_done_tasks" />
+                    android:icon="@drawable/ic_folder"
+                    android:title="@string/folders" />
                 </group>
             </menu>
         </item>

@@ -75,5 +75,6 @@
     <string name="time_repetitive">Repetida</string>
     <string name="PH_urgency">urgency</string>
     <string name="task_in_progress_indicator">Tarea en progreso</string>
+    <string name="folders">Categorías</string>
 
 </resources>

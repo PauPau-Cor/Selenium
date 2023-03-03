@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.reminderapp.R
 import com.example.reminderapp.adapters.SimpleTasksAdapter
 import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.databinding.FragmentAllToDoBinding
@@ -81,11 +82,11 @@ class AllToDoFragment : Fragment() {
     }
 
     private fun createNewTask() {
-        val title : String = binding.AddTaskET.editText?.text.toString()
+        val title : String = binding.AddTaskET.editText?.text.toString().trim()
         if(title.isBlank()){
             return
         }
-        val newTask = TaskModel(userID = userModel.userID!!, title = title, priority = priorityValue)
+        val newTask = TaskModel(userID = userModel.userID!!, title = title, priority = priorityValue, categoryName = requireContext().getString(R.string.no_folder))
         db.collection(Constants.TasksCollection).add(newTask)
         binding.AddTaskET.editText!!.setText("")
         binding.PriorityGroup.selectButtonWithAnimation(binding.middlePriorityBtn.id)
