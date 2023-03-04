@@ -41,7 +41,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textShortMessage"
                     android:fontFamily="@font/louiscafe"
-                    style="@style/TXT"/>
+                    style="@style/TXT"
+                    tools:ignore="VisualLintTextFieldSize" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -15,6 +15,7 @@ import com.example.reminderapp.databinding.ActivityMainMenuBinding
 import com.example.reminderapp.models.UserModel
 import com.example.reminderapp.toDoMenus.AllToDoFragment
 import com.example.reminderapp.toDoMenus.DoneTasksFragment
+import com.example.reminderapp.toDoMenus.FoldersFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class MainMenuActivity : AppCompatActivity() {
@@ -59,6 +60,7 @@ class MainMenuActivity : AppCompatActivity() {
                     R.id.nav_feed -> showFragment(HomeFragment.newInstance(userModel))
                     R.id.nav_tasks -> showFragment(AllToDoFragment.newInstance(userModel))
                     R.id.nav_done_tasks -> showFragment(DoneTasksFragment.newInstance(userModel))
+                    R.id.nav_folders -> showFragment(FoldersFragment.newInstance(userModel))
                     R.id.nav_logout -> {
                         signOut()
                     }
