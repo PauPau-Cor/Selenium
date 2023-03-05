@@ -7,7 +7,7 @@ object Constants {
     const val userIDField = "userID"
 
     const val CategoriesCollection = "categories"
-
+    const val lastEditedField = "lastEdited"
 
     const val TasksCollection = "tasks"
     const val priorityField = "priority"

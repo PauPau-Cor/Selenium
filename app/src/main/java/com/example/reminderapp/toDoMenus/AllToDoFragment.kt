@@ -17,6 +17,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.transition.MaterialSharedAxis
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import java.util.*
 
 class AllToDoFragment : Fragment() {
 
@@ -45,7 +46,6 @@ class AllToDoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.PriorityGroup.selectButton(binding.middlePriorityBtn.id)
-
         setUpAddTaskMenu()
         setUpRV()
     }
@@ -63,7 +63,6 @@ class AllToDoFragment : Fragment() {
 
     private fun setUpAddTaskMenu() {
         val dialogMaker = DialogMaker()
-
         binding.PriorityGroup.setOnSelectListener {
             when(it){
                 binding.lowPriorityBtn -> priorityValue = 0

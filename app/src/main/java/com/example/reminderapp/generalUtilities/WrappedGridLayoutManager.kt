@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class wrappedGridLayoutManager(context:Context, spanCount: Int,
+class WrappedGridLayoutManager(context:Context, spanCount: Int,
                                orientation: Int = RecyclerView.VERTICAL
                                , reverseLayout: Boolean = false):
     GridLayoutManager(context, spanCount, orientation,reverseLayout) {
