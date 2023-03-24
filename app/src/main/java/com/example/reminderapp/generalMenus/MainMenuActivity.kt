@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.reminderapp.R
@@ -36,6 +35,11 @@ class MainMenuActivity : AppCompatActivity() {
         drawerInit()
     }
 
+    override fun onResume() {
+        binding.NavigationView.checkedItem?.let { drawerOptions(it) }
+        super.onResume()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (toggle.onOptionsItemSelected(item)) {
             true
@@ -56,17 +60,21 @@ class MainMenuActivity : AppCompatActivity() {
         binding.NavigationView.setNavigationItemSelectedListener {
             binding.DrawerLayout.closeDrawers()
             binding.DrawerLayout.postDelayed({
-                when(it.itemId){
-                    R.id.nav_feed -> showFragment(HomeFragment.newInstance(userModel))
-                    R.id.nav_tasks -> showFragment(AllToDoFragment.newInstance(userModel))
-                    R.id.nav_done_tasks -> showFragment(DoneTasksFragment.newInstance(userModel))
-                    R.id.nav_folders -> showFragment(FoldersFragment.newInstance(userModel))
-                    R.id.nav_logout -> {
-                        signOut()
-                    }
-                }
+                drawerOptions(it)
             }, 240)
             true
+        }
+    }
+
+    private fun drawerOptions(item: MenuItem){
+        when(item.itemId){
+            R.id.nav_feed -> showFragment(HomeFragment.newInstance(userModel))
+            R.id.nav_tasks -> showFragment(AllToDoFragment.newInstance(userModel))
+            R.id.nav_done_tasks -> showFragment(DoneTasksFragment.newInstance(userModel))
+            R.id.nav_folders -> showFragment(FoldersFragment.newInstance(userModel))
+            R.id.nav_logout -> {
+                signOut()
+            }
         }
     }
 

@@ -11,8 +11,8 @@
         android:id="@+id/menuLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/darkerwhite"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/CRDMENU">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:paddingHorizontal="5dp"
             android:paddingVertical="15dp"
@@ -29,6 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/no_folder"
+                style="@style/EXFAB"
                 app:icon="@drawable/ic_folder"/>
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -41,6 +42,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/add"
+                style="@style/EXFAB"
                 app:icon="@drawable/ic_add_folder"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -109,7 +109,6 @@
 
     <style name="CRDMENU">
         <item name="cardBackgroundColor">@color/darkerwhite</item>
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners</item>
     </style>
 
     <style name="ShapeAppearanceOverlay_card_custom_corners" parent="">
@@ -122,6 +121,12 @@
 
     <style name="DRWR">
         <item name="android:background">@color/darkerwhite</item>
+    </style>
+
+    <style name="EXFAB" >
+        <item name="android:backgroundTint">@color/darkestwhite</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="iconTint">@color/black</item>
     </style>
 
     <!-- TODO: what's up with this lol -->
