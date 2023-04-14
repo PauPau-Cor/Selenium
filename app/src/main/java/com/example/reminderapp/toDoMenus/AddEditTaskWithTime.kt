@@ -5,55 +5,65 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.reminderapp.R
+import com.example.reminderapp.databinding.FragmentAddEditTaskWithTimeBinding
+import com.example.reminderapp.generalUtilities.DialogMaker
+import com.example.reminderapp.generalUtilities.GeneralUtilities
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_DATE = "DATE"
+private const val ARG_HOUR = "HOUR"
+private const val ARG_MINUTE = "MINUTE"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AddEditTaskWithTime.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AddEditTaskWithTime : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var Date: String? = null
-    private var Time: String? = null
+    private var date: String? = null
+    private var hour: Int = 0
+    private var minute: Int = 0
+    lateinit var binding : FragmentAddEditTaskWithTimeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            Date = it.getString(ARG_PARAM1)
-            Time = it.getString(ARG_PARAM2)
+            date = it.getString(ARG_DATE)
+            hour = it.getInt(ARG_HOUR)
+            minute = it.getInt(ARG_MINUTE)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_edit_task_with_time, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentAddEditTaskWithTimeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val dialogMaker = DialogMaker()
+        binding.TaskDate.editText?.setText(date)
+        binding.TaskTime.editText?.setText(GeneralUtilities().round5Minutes(hour, minute))
+
+        binding.TaskDate.editText?.setOnClickListener { activity?.let { it1 ->
+                dialogMaker.pickDate(
+                    binding.TaskDate,
+                    it1.supportFragmentManager,
+                    requireContext()
+                )
+            }
+        }
+
+        binding.TaskTime.editText?.setOnClickListener {
+            dialogMaker.pickTime(
+                binding.TaskTime,
+                requireContext()
+            )
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AddEditTaskWithTime.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(date: String, hour: Int, minute: Int) =
             AddEditTaskWithTime().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_DATE, date)
+                    putInt(ARG_HOUR, hour)
+                    putInt(ARG_MINUTE, minute)
                 }
             }
     }

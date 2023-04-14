@@ -34,6 +34,7 @@
     <!--Code-->
     <!--Formats-->
     <string name="date_formatter">%1$d/%2$d/%3$d</string>
+    <string name="datetime_formatter">%1$d/%2$d/%3$d %4$d:%5$d</string>
     <!--Errors-->
     <string name="err_default">Algo ha salido mal: %1$s</string>
     <string name="err_empty_field">Favor de no dejar campo vacío.</string>
@@ -78,5 +79,15 @@
     <string name="folders">Categorías</string>
     <string name="PH_folder">Folder</string>
     <string name="PH_task_date_done">TaskDateDone</string>
+    <string name="days">Días</string>
+    <string name="daily">Diario</string>
+    <string name="abr_monday">Lun</string>
+    <string name="abr_tuesday">Mar</string>
+    <string name="abr_wednesday">Mie</string>
+    <string name="abr_thursday">Jue</string>
+    <string name="abr_friday">Vie</string>
+    <string name="abr_saturday">Sab</string>
+    <string name="abr_sunday">Dom</string>
+    <string name="task_uploaded">Tarea guardada exitosamente</string>
 
 </resources>

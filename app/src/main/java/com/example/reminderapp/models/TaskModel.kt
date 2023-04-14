@@ -11,11 +11,12 @@ data class TaskModel(
     val userID: String = "",
     val title : String = "",
     val progress : Int = 0,
-    val categoryID : String = "",
+    var categoryID : String = "",
     val categoryName : String = "",
     val dateFinished: Date = Date(),
     val priority : Int = 0,
-    val dueType : Int = 0,
-    val date : String = "",
-    val days : List<Char> = listOf(),
-    val times : List<String> = listOf()) : Parcelable
+    var dueType : Int = 0,
+    var date : String = "",
+    var time : String = "",
+    var days : ArrayList<Int> = arrayListOf(),
+    ) : Parcelable

@@ -39,12 +39,17 @@ class DoneTasksFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpDateSearch()
         setUpRV()
     }
+
+    private fun setUpDateSearch() {
+
+    }
+
     private fun setUpRV() {
         val query: Query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID)
             .whereEqualTo(Constants.progressField, 2).orderBy(Constants.dateFinishedField, Query.Direction.DESCENDING)
-            .orderBy(Constants.categoryIDField).orderBy(Constants.priorityField, Query.Direction.DESCENDING)
         val options = FirestoreRecyclerOptions.Builder<TaskModel>()
             .setQuery(query, TaskModel::class.java).setLifecycleOwner(this).build()
         adapter = DoneTasksAdapter(options)

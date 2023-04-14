@@ -22,7 +22,6 @@
             android:layout_height="match_parent"
             app:navigationIcon="@drawable/ic_back"
             app:navigationIconTint="@color/main_blue"
-            app:menu="@menu/add_edit_to_do_menu"
             app:title="@string/add_task"
             app:titleCentered="true"
             app:titleTextColor="@color/main_blue"
@@ -50,6 +49,7 @@
             style="@style/outlinedTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textSize="20sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textShortMessage"
@@ -109,7 +109,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@id/TaskTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -120,17 +120,43 @@
             style="@style/outlinedDropdownMenu">
 
             <AutoCompleteTextView
+                style="@style/TXT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
                 android:fontFamily="@font/louiscafe"
-                style="@style/TXT"
-                tools:ignore="LabelFor"
-                android:popupBackground="@drawable/background_dropdown_menu_light"/>
+                android:inputType="none"
+                android:popupBackground="@drawable/background_dropdown_menu_light"
+                android:textSize="20sp"
+                tools:ignore="LabelFor,SpeakableTextPresentCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/TaskFolder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:endIconDrawable="@drawable/ic_important"
+            app:endIconMode="dropdown_menu"
+            android:id="@+id/TaskImportance"
+            android:hint="@string/priority"
+            style="@style/outlinedDropdownMenu">
+
+            <AutoCompleteTextView
+                style="@style/TXT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/louiscafe"
+                android:inputType="none"
+                android:popupBackground="@drawable/background_dropdown_menu_light"
+                android:textSize="20sp"
+                tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--<TextView
             android:id="@+id/priorityLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -138,7 +164,7 @@
             android:fontFamily="@font/planner"
             android:textStyle="bold"
             style="@style/TXT"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@id/TaskFolder"
             app:layout_constraintStart_toStartOf="parent"
             android:textSize="15sp"/>
@@ -149,7 +175,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/priorityLabel"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="10dp"
             app:justifyContent="center"
             app:toggle_selectableAmount="1"
             app:toggle_requiredAmount="1">
@@ -184,14 +210,15 @@
                 style="@style/BTTN2"
                 />
 
-        </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+        </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>-->
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="220dp"
+            android:layout_marginTop="25dp"
             style="@style/CRD"
-            app:layout_constraintTop_toBottomOf="@id/PriorityGroup"
+            app:layout_constraintTop_toBottomOf="@id/TaskImportance"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -210,47 +237,55 @@
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Indefinida"
+                        android:text="@string/time_undefined"
                         android:icon="@drawable/ic_no_event"
                         />
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Definida"
+                        android:text="@string/time_defined"
                         android:icon="@drawable/ic_event"
                         />
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Repetida"
+                        android:text="@string/time_repetitive"
                         android:icon="@drawable/ic_event_repeat"
                         />
                 </com.google.android.material.tabs.TabLayout>
 
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="300dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     app:layout_constraintTop_toBottomOf="@id/timeDefinition"
-                    android:background="@drawable/background_frame_layout"
-                    android:backgroundTint="@color/darkestwhite"/>
+                    app:layout_constraintBottom_toBottomOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/confirmButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="30dp"
+            android:paddingVertical="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_send"
-            app:fabCustomSize="60dp"
+            app:icon="@drawable/ic_send"
+            android:text="@string/add_task"
+            app:iconSize="33dp"
+            android:textSize="22sp"
+            android:fontFamily="@font/planner"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            app:iconGravity="end"
+            app:iconPadding="20dp"
             style="@style/FAB"
             android:contentDescription="@string/submit_desc"/>
 

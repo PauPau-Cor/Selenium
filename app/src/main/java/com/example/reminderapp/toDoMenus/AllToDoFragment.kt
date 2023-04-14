@@ -1,5 +1,6 @@
 package com.example.reminderapp.toDoMenus
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,6 @@ import com.example.reminderapp.R
 import com.example.reminderapp.adapters.SimpleTasksAdapter
 import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.databinding.FragmentAllToDoBinding
-import com.example.reminderapp.generalUtilities.DialogMaker
 import com.example.reminderapp.generalUtilities.WrappedLinearLayoutManager
 import com.example.reminderapp.models.TaskModel
 import com.example.reminderapp.models.UserModel
@@ -56,13 +56,12 @@ class AllToDoFragment : Fragment() {
             .orderBy(Constants.categoryIDField).orderBy(Constants.priorityField, Query.Direction.DESCENDING)
         val options = FirestoreRecyclerOptions.Builder<TaskModel>()
             .setQuery(query, TaskModel::class.java).setLifecycleOwner(this).build()
-        adapter = SimpleTasksAdapter(options)
+        adapter = SimpleTasksAdapter(options, requireContext())
         binding.TasksRV.adapter = adapter
         binding.TasksRV.layoutManager = WrappedLinearLayoutManager(requireContext())
     }
 
     private fun setUpAddTaskMenu() {
-        val dialogMaker = DialogMaker()
         binding.PriorityGroup.setOnSelectListener {
             when(it){
                 binding.lowPriorityBtn -> priorityValue = 0
@@ -72,7 +71,7 @@ class AllToDoFragment : Fragment() {
         }
 
         binding.AddTaskMore.setOnClickListener{
-            dialogMaker.advancedTask(requireContext(), this, userModel, binding.AddTaskET.editText!!.text.toString(), "", priorityValue)
+            startActivity(Intent(context, AddEditToDoActivity::class.java).putExtra(Constants.PutExUser, userModel))
         }
 
         binding.AddTaskBT.setOnClickListener{

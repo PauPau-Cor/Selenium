@@ -40,9 +40,11 @@ class DoneTasksAdapter(options : FirestoreRecyclerOptions<TaskModel>) : Firestor
         }
 
         holder.taskDelete.setOnClickListener{
-            db = FirebaseFirestore.getInstance()
-            db.collection(Constants.TasksCollection).document(model.taskID!!).delete()
-            notifyItemRemoved(position)
+            if(itemCount != 0){
+                db = FirebaseFirestore.getInstance()
+                db.collection(Constants.TasksCollection).document(model.taskID!!).delete()
+                notifyItemRemoved(position)
+            }
         }
     }
 }
