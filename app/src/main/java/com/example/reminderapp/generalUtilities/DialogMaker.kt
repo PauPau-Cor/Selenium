@@ -3,11 +3,18 @@ package com.example.reminderapp.generalUtilities
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
 import android.content.Context
+import android.view.View
 import android.widget.TimePicker
+import android.widget.Toast.LENGTH_SHORT
 import androidx.fragment.app.FragmentManager
 import com.example.reminderapp.R
+import com.example.reminderapp.dataClasses.Constants
+import com.example.reminderapp.generalDialogs.DialogAddFolder
 import com.example.reminderapp.generalDialogs.DialogDatePicker
+import com.example.reminderapp.models.CategoryModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class DialogMaker {
@@ -31,5 +38,18 @@ class DialogMaker {
             hour, minute, true
         )
         timePickerDialog.show()
+    }
+
+    fun addFolder(fragmentManager: FragmentManager, view: View, db: FirebaseFirestore, userID: String){
+        val addFolder = DialogAddFolder{ title  -> run{
+            db.collection(Constants.CategoriesCollection).add(CategoryModel(userID = userID, title = title))
+                .addOnSuccessListener {
+                    Snackbar.make(view, R.string.folder_uploaded, LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Snackbar.make(view, view.context.getString(R.string.err_default, it.message), LENGTH_SHORT).show()
+                }
+        }}
+        addFolder.show(fragmentManager, "folderAdder")
     }
 }

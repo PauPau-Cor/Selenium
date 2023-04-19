@@ -2,6 +2,7 @@ package com.example.reminderapp.toDoMenus
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import com.example.reminderapp.R
@@ -16,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Date
 import kotlin.streams.toList
 
 class AddEditToDoActivity : AppCompatActivity() {
@@ -75,6 +77,10 @@ class AddEditToDoActivity : AppCompatActivity() {
                             (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).taskRepeating.binding.TaskTime,),
                         this)
                 ){ return }
+                if ((binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).taskRepeating.binding.WeekGroup.selectedButtons.size == 0){
+                    Snackbar.make(binding.root, this.getString(R.string.err_select_days), LENGTH_SHORT).show()
+                    return
+                }
             }
         }
         makeModel()
@@ -118,9 +124,11 @@ class AddEditToDoActivity : AppCompatActivity() {
                     .taskWithTime.binding.TaskTime.editText?.text.toString()
                 newTask.date = (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter)
                     .taskWithTime.binding.TaskDate.editText?.text.toString()
+
             }
             2 -> {
                 newTask.dueType = 2
+                newTask.repeatDates = arrayListOf()
                 newTask.time = (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter)
                     .taskRepeating.binding.TaskTime.editText?.text.toString()
                 (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter)
@@ -146,7 +154,15 @@ class AddEditToDoActivity : AppCompatActivity() {
         binding.TaskFolder.editText?.setText("")
         binding.TaskImportance.editText?.setText("")
         binding.viewPager.setCurrentItem(0, true)
-        db.collection(Constants.TasksCollection).add(taskModel).addOnSuccessListener {
+        val batch = db.batch()
+        val taskRef = db.collection(Constants.TasksCollection).document()
+        batch.set(taskRef, taskModel)
+        if(taskModel.categoryID.isNotBlank()){
+            val folderRef = db.collection(Constants.CategoriesCollection).document(taskModel.categoryID)
+            batch.update(folderRef, Constants.lastEditedField, Date())
+        }
+
+        batch.commit().addOnSuccessListener {
             Snackbar.make(binding.root, this.getString(R.string.task_uploaded), Snackbar.LENGTH_LONG).show()
         }.addOnFailureListener{
             Snackbar.make(binding.root, this.getString(R.string.err_default, it.message), Snackbar.LENGTH_LONG).show()

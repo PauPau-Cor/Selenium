@@ -19,4 +19,6 @@ data class TaskModel(
     var date : String = "",
     var time : String = "",
     var days : ArrayList<Int> = arrayListOf(),
+    var setDate : Date? = null,
+    var repeatDates : ArrayList<Date>? = null,
     ) : Parcelable

@@ -1,6 +1,7 @@
 package com.example.reminderapp.generalUtilities
 
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class GeneralUtilities {
@@ -15,6 +16,12 @@ class GeneralUtilities {
             Locale.getDefault(), "%02d:%02d",
             calendar[Calendar.HOUR_OF_DAY], calendar[Calendar.MINUTE]
         )
+    }
+
+    fun strsToDate(date: String, time: String): Date{
+        val timestamp : Calendar = Calendar.getInstance()
+        timestamp
+        return timestamp.time
     }
 
 }

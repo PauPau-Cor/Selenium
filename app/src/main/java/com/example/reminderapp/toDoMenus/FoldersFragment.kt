@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.example.reminderapp.adapters.FoldersAdapter
 import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.databinding.FragmentFoldersBinding
+import com.example.reminderapp.generalUtilities.DialogMaker
 import com.example.reminderapp.generalUtilities.WrappedGridLayoutManager
 import com.example.reminderapp.models.CategoryModel
 import com.example.reminderapp.models.UserModel
@@ -15,7 +16,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.transition.MaterialSharedAxis
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlin.random.Random
 
 class FoldersFragment : Fragment() {
     private lateinit var binding : FragmentFoldersBinding
@@ -46,11 +46,11 @@ class FoldersFragment : Fragment() {
     }
 
     private fun setupAddFolderBT() {
+        val dialogMaker = DialogMaker()
         binding.addFolder.setOnClickListener{
-            db.collection(Constants.CategoriesCollection).add(CategoryModel(userID = userModel.userID!!, title = Random.nextInt().toString()))
-                .addOnSuccessListener {
-                    binding.FoldersList.smoothScrollToPosition(0)
-                }
+            if(isAdded){
+                dialogMaker.addFolder(fragmentManager = parentFragmentManager, binding.root, db, userModel.userID!!)
+            }
         }
     }
 

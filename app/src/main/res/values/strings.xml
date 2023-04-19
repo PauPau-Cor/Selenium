@@ -33,8 +33,8 @@
 
     <!--Code-->
     <!--Formats-->
-    <string name="date_formatter">%1$d/%2$d/%3$d</string>
-    <string name="datetime_formatter">%1$d/%2$d/%3$d %4$d:%5$d</string>
+    <string name="date_formatter" translatable="false">%1$d/%2$d/%3$d</string>
+    <string name="datetime_formatter" translatable="false">%1$d/%2$d/%3$d %4$d:%5$d</string>
     <!--Errors-->
     <string name="err_default">Algo ha salido mal: %1$s</string>
     <string name="err_empty_field">Favor de no dejar campo vacío.</string>
@@ -47,21 +47,21 @@
     <string name="err_wrong_pass">Contraseña incorrecta.</string>
 
     <!-- placeholders -->
-    <string name="PH_task_title">taskTitle</string>
-    <string name="PH_task_category">taskCategory</string>
+    <string name="PH_task_title" translatable="false">taskTitle</string>
+    <string name="PH_task_category" translatable="false">taskCategory</string>
 
     <!-- actions -->
-    <string name="ACT_mark_as_done">Mark as done</string>
+    <string name="ACT_mark_as_done">Marcar como completada.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="new_task">Nueva tarea</string>
     <string name="menu_all_to_do">Todas las tareas</string>
     <string name="low">Baja</string>
     <string name="mid">Media</string>
     <string name="high">Alta</string>
     <string name="date">Fecha</string>
-    <string name="submit_desc">Submit task</string>
+    <string name="submit_desc">Subir tarea.</string>
     <string name="advanced_settings">Configuración avanzada</string>
     <string name="add_task">Añadir tarea</string>
     <string name="title">Titulo</string>
@@ -74,11 +74,11 @@
     <string name="time_undefined">Indefinida</string>
     <string name="time_defined">Definida</string>
     <string name="time_repetitive">Repetida</string>
-    <string name="PH_urgency">urgency</string>
+    <string name="PH_urgency" translatable="false">urgency</string>
     <string name="task_in_progress_indicator">Tarea en progreso</string>
     <string name="folders">Categorías</string>
-    <string name="PH_folder">Folder</string>
-    <string name="PH_task_date_done">TaskDateDone</string>
+    <string name="PH_folder" translatable="false">Folder</string>
+    <string name="PH_task_date_done" translatable="false">TaskDateDone</string>
     <string name="days">Días</string>
     <string name="daily">Diario</string>
     <string name="abr_monday">Lun</string>
@@ -89,5 +89,9 @@
     <string name="abr_saturday">Sab</string>
     <string name="abr_sunday">Dom</string>
     <string name="task_uploaded">Tarea guardada exitosamente</string>
+    <string name="err_select_days">Seleccione por lo menos un día.</string>
+    <string name="add_folder">Añadir categoria</string>
+    <string name="err_too_long">El texto introducido es demasiado grande.</string>
+    <string name="folder_uploaded">Categoria creada exitosamente.</string>
 
 </resources>
