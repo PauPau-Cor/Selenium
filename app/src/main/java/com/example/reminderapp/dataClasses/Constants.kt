@@ -5,6 +5,7 @@ object Constants {
 
     const val UsersCollection = "users"
     const val userIDField = "userID"
+    const val tokenField = "token"
 
     const val CategoriesCollection = "categories"
     const val lastEditedField = "lastEdited"

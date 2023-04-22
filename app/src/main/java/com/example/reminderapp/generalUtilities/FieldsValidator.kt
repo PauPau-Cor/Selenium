@@ -6,7 +6,6 @@ import android.util.Log
 import com.example.reminderapp.R
 import com.google.android.material.textfield.TextInputLayout
 import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -36,18 +35,16 @@ class FieldsValidator {
         return true
     }
 
-    fun checkDateAfterToday(dateIn : TextInputLayout, context: Context): Boolean {
+    fun checkDateAfterToday(field : TextInputLayout, date: Date, context: Context): Boolean {
         try{
-            val dateConverted : Date = SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(dateIn.editText?.text.toString())!!
             val currentDate = Date()
-
-            if(!dateConverted.before(currentDate)) {
-                dateIn setError context.getString(R.string.err_date_not_past)
+            if(!date.before(currentDate)) {
+                field setError context.getString(R.string.err_date_not_past)
                 return false
             }
 
         } catch (e : ParseException){
-            dateIn setError context.getString(R.string.err_wrong_format)
+            field setError context.getString(R.string.err_wrong_format)
             Log.e(TAG, "checkDateAfterToday: Parse error", e)
             return false
         }

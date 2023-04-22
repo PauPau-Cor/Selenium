@@ -18,12 +18,15 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.ZoneId
+import java.util.Date
 
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignInBinding
     private val auth : FirebaseAuth = FirebaseAuth.getInstance()
     private val db : FirebaseFirestore = FirebaseFirestore.getInstance()
+    private var birth : Date? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,10 @@ class SignInActivity : AppCompatActivity() {
         val dialogMaker = DialogMaker()
         binding.RegBirthday.editText?.setOnClickListener { dialogMaker.pickDate(binding.RegBirthday, supportFragmentManager) }
 
-        binding.RegRegister.setOnClickListener{ validateData() }
+        binding.RegRegister.setOnClickListener{
+            birth = Date.from(dialogMaker.date.withHour(0).withMinute(0).atZone(ZoneId.systemDefault()).toInstant())
+            validateData()
+        }
     }
 
     private fun validateData() {
@@ -45,7 +51,7 @@ class SignInActivity : AppCompatActivity() {
         if(!validator.checkPasswords(binding.RegPass, binding.RegPassConf, this)){
             return
         }
-        if(!validator.checkDateAfterToday(binding.RegBirthday,this)){
+        if(!validator.checkDateAfterToday(binding.RegBirthday, birth!!,this)){
             return
         }
 
@@ -56,11 +62,10 @@ class SignInActivity : AppCompatActivity() {
         val mail : String = binding.RegMail.editText?.text.toString()
         val pass : String = binding.RegPass.editText?.text.toString()
         val name : String = binding.RegUser.editText?.text.toString()
-        val birth : String = binding.RegBirthday.editText?.text.toString()
 
         binding.PB.visibility = View.VISIBLE
         auth.createUserWithEmailAndPassword(mail, pass).addOnSuccessListener {
-            val newUser = UserModel(auth.uid, name, mail, birth)
+            val newUser = UserModel(auth.uid, name, mail, birth!!)
             registerUserToDB(newUser)
         }.addOnFailureListener {
             binding.PB.visibility = View.GONE
