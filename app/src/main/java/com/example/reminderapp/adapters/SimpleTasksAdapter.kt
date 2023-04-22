@@ -14,6 +14,9 @@ import com.example.reminderapp.models.TaskModel
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.Date
 
 class SimpleTasksAdapter(options: FirestoreRecyclerOptions<TaskModel>, private val context: Context) : FirestoreRecyclerAdapter<TaskModel, SimpleTasksViewHolder>(options) {
@@ -101,10 +104,10 @@ class RepeatingTasksViewHolder(itemView: View, private val context: Context) : S
 
     override fun setData(model: TaskModel, db: FirebaseFirestore){
         super.setData(model, db)
-
-        var repeatsConcat = model.time + " "
+        val localTime = model.repeatDates?.get(0)?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDateTime()
+        var repeatsConcat = localTime?.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)) + " "
         if(model.days.size == 7){
-            repeatsConcat += " " + context.getString(R.string.daily)
+            repeatsConcat += context.getString(R.string.daily)
         }else {
             model.days.forEachIndexed { i, it ->
                 repeatsConcat += when (it) {
@@ -157,6 +160,7 @@ class SetDateTasksViewHolder(itemView: View) : SimpleTasksViewHolder(itemView){
     @SuppressLint("SetTextI18n")
     override fun setData(model: TaskModel, db: FirebaseFirestore){
         super.setData(model, db)
-        taskDate.text = "${model.date} ${model.time}"
+        val localTime = model.setDate!!.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+        taskDate.text = localTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))
     }
 }

@@ -1,27 +1,29 @@
 package com.example.reminderapp.generalUtilities
 
-import java.util.Calendar
+import java.time.DayOfWeek
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.time.temporal.TemporalAdjusters
 import java.util.Date
-import java.util.Locale
 
 class GeneralUtilities {
 
-    fun round5Minutes(hour: Int, minutes: Int): String{
-        val calendar = Calendar.getInstance()
-        calendar[Calendar.HOUR_OF_DAY] = hour
-        calendar[Calendar.MINUTE] = minutes
-        val mod = minutes % 5
-        calendar.add(Calendar.MINUTE, if (mod < 3) -mod else 5 - mod)
-        return String.format(
-            Locale.getDefault(), "%02d:%02d",
-            calendar[Calendar.HOUR_OF_DAY], calendar[Calendar.MINUTE]
+    fun nextOrSameWithTime(dayOfWeek: DayOfWeek, time: String): Date{
+        val currentLocalDateTime = LocalDateTime.of(
+            LocalDate.now(),
+            LocalTime.parse(time, DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
         )
-    }
-
-    fun strsToDate(date: String, time: String): Date{
-        val timestamp : Calendar = Calendar.getInstance()
-        timestamp
-        return timestamp.time
+        var newLocalDateTime = LocalDateTime.now().with(TemporalAdjusters.nextOrSame(dayOfWeek))
+        if(newLocalDateTime.dayOfWeek.equals(currentLocalDateTime.dayOfWeek)
+            && newLocalDateTime.isAfter(currentLocalDateTime)){
+            newLocalDateTime = newLocalDateTime.plusWeeks(1)
+        }
+        newLocalDateTime = newLocalDateTime.with(currentLocalDateTime.toLocalTime())
+        return Date.from(newLocalDateTime.atZone(ZoneId.systemDefault()).toInstant())
     }
 
 }

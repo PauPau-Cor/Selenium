@@ -45,7 +45,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginHorizontal="5dp"
                 style="@style/TXT"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/planner"
                 android:text="@string/PH_task_category"/>

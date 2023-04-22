@@ -9,19 +9,19 @@ import com.example.reminderapp.toDoMenus.AddEditTaskRepeatingFields
 import com.example.reminderapp.toDoMenus.AddEditTaskWithTime
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 
 class AddToDoTimeViewPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
     private val current = LocalDateTime.now()
+    private val roundedTime = current.plusMinutes((if (current.minute % 5 < 3) -(current.minute % 5) else 5 - (current.minute % 5)).toLong())
 
     val taskWithTime = AddEditTaskWithTime.newInstance(
-        current.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-        current.hour,
-        current.minute,
+        current.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)),
+        roundedTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
         )
     val taskRepeating = AddEditTaskRepeatingFields.newInstance(
-        current.hour,
-        current.minute,
+        roundedTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
         )
 
     private val fragmentList: ArrayList<Fragment> =
@@ -36,6 +36,10 @@ class AddToDoTimeViewPagerAdapter(activity: FragmentActivity) : FragmentStateAda
 
     override fun createFragment(position: Int): Fragment {
         return fragmentList[position]
+    }
+
+    fun getSetDate(): LocalDateTime {
+        return taskWithTime.dialogMaker.date
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.reminderapp.generalMenus
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -16,6 +17,9 @@ import com.example.reminderapp.toDoMenus.AllToDoFragment
 import com.example.reminderapp.toDoMenus.DoneTasksFragment
 import com.example.reminderapp.toDoMenus.FoldersFragment
 import com.google.firebase.auth.FirebaseAuth
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class MainMenuActivity : AppCompatActivity() {
 
@@ -33,6 +37,9 @@ class MainMenuActivity : AppCompatActivity() {
         @Suppress("DEPRECATION")
         userModel = intent.getParcelableExtra(Constants.PutExUser)!!
         drawerInit()
+
+        val localDateTime = LocalDateTime.now()
+        Toast.makeText(this, localDateTime.format( DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)), Toast.LENGTH_SHORT).show()
     }
 
     override fun onResume() {

@@ -16,8 +16,6 @@ data class TaskModel(
     val dateFinished: Date = Date(),
     val priority : Int = 0,
     var dueType : Int = 0,
-    var date : String = "",
-    var time : String = "",
     var days : ArrayList<Int> = arrayListOf(),
     var setDate : Date? = null,
     var repeatDates : ArrayList<Date>? = null,

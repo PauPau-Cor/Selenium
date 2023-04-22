@@ -15,27 +15,35 @@ import com.example.reminderapp.models.CategoryModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.FirebaseFirestore
-
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class DialogMaker {
 
-    fun pickDate(field: TextInputLayout, fragmentManager: FragmentManager, context: Context) {
-        val datePicker = DialogDatePicker { day, month, year -> run { field.editText?.setText(context.getString(R.string.date_formatter, day, month+1,year)) } }
+    var date: LocalDateTime = LocalDateTime.now().withSecond(0)
+    fun pickDate(field: TextInputLayout, fragmentManager: FragmentManager) {
+        val datePicker = DialogDatePicker { day, month, year -> run {
+            date = date.withYear(year)
+            date = date.withMonth(month+1)
+            date = date.withDayOfMonth(day)
+            field.editText?.setText(date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)))
+        } }
         datePicker.show(fragmentManager, "datePicker")
     }
 
     fun pickTime(field: TextInputLayout, context: Context){
-        var hour = 0
-        var minute = 0
         val onTimeSetListener =
             OnTimeSetListener { _: TimePicker?, selectedHour: Int, selectedMinute: Int ->
-                hour = selectedHour
-                minute = selectedMinute
-                field.editText?.setText(GeneralUtilities().round5Minutes(selectedHour, selectedMinute))
+                date = date.withHour(selectedHour)
+                date = date.withMinute(selectedMinute)
+                val mod = selectedMinute % 5
+                date = date.plusMinutes((if (mod < 3) -mod else 5 - mod).toLong())
+                field.editText?.setText(date.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)))
             }
         val timePickerDialog = TimePickerDialog(
             context, onTimeSetListener,
-            hour, minute, true
+            date.hour, date.minute, false
         )
         timePickerDialog.show()
     }

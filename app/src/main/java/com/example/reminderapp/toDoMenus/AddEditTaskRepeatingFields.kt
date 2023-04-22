@@ -7,21 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.reminderapp.databinding.FragmentAddEditTaskRepeatingFieldsBinding
 import com.example.reminderapp.generalUtilities.DialogMaker
-import com.example.reminderapp.generalUtilities.GeneralUtilities
 
-private const val ARG_HOUR = "HOUR"
-private const val ARG_MINUTE = "MINUTE"
+private const val ARG_TIME = "TIME"
 
 class AddEditTaskRepeatingFields : Fragment() {
-    private var hour: Int = 0
-    private var minute: Int = 0
+    private var time: String? = null
     lateinit var binding: FragmentAddEditTaskRepeatingFieldsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            hour = it.getInt(ARG_HOUR)
-            minute = it.getInt(ARG_MINUTE)
+            time = it.getString(ARG_TIME)
         }
     }
 
@@ -33,7 +29,7 @@ class AddEditTaskRepeatingFields : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val dialogMaker = DialogMaker()
-        binding.TaskTime.editText?.setText(GeneralUtilities().round5Minutes(hour, minute))
+        binding.TaskTime.editText?.setText(time)
 
         binding.TaskTime.editText?.setOnClickListener {
             dialogMaker.pickTime(
@@ -45,11 +41,10 @@ class AddEditTaskRepeatingFields : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(hour: Int, minute: Int) =
+        fun newInstance(time: String,) =
             AddEditTaskRepeatingFields().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_HOUR, hour)
-                    putInt(ARG_MINUTE, minute)
+                    putString(ARG_TIME, time)
                 }
             }
     }

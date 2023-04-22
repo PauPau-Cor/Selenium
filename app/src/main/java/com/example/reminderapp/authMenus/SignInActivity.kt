@@ -31,8 +31,7 @@ class SignInActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val dialogMaker = DialogMaker()
-
-        binding.RegBirthday.editText?.setOnClickListener { dialogMaker.pickDate(binding.RegBirthday, supportFragmentManager, this) }
+        binding.RegBirthday.editText?.setOnClickListener { dialogMaker.pickDate(binding.RegBirthday, supportFragmentManager) }
 
         binding.RegRegister.setOnClickListener{ validateData() }
     }

@@ -10,6 +10,7 @@ import com.example.reminderapp.adapters.AddToDoTimeViewPagerAdapter
 import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.databinding.ActivityAddEditToDoBinding
 import com.example.reminderapp.generalUtilities.FieldsValidator
+import com.example.reminderapp.generalUtilities.GeneralUtilities
 import com.example.reminderapp.models.CategoryModel
 import com.example.reminderapp.models.TaskModel
 import com.example.reminderapp.models.UserModel
@@ -17,6 +18,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.DayOfWeek
+import java.time.ZoneId
 import java.util.Date
 import kotlin.streams.toList
 
@@ -120,27 +123,48 @@ class AddEditToDoActivity : AppCompatActivity() {
         when(binding.viewPager.currentItem){
             1 -> {
                 newTask.dueType = 1
-                newTask.time = (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter)
-                    .taskWithTime.binding.TaskTime.editText?.text.toString()
-                newTask.date = (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter)
-                    .taskWithTime.binding.TaskDate.editText?.text.toString()
-
+                newTask.setDate = Date.from(
+                    (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).getSetDate()
+                        .atZone(ZoneId.systemDefault()).toInstant()
+                )
             }
             2 -> {
                 newTask.dueType = 2
                 newTask.repeatDates = arrayListOf()
-                newTask.time = (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter)
+                val genUtil = GeneralUtilities()
+                val time : String = (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter)
                     .taskRepeating.binding.TaskTime.editText?.text.toString()
                 (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter)
                     .taskRepeating.binding.WeekGroup.selectedButtons.forEach {
                         when(it.text){
-                            this.getString(R.string.abr_sunday) -> newTask.days.add(0)
-                            this.getString(R.string.abr_monday) -> newTask.days.add(1)
-                            this.getString(R.string.abr_tuesday) -> newTask.days.add(2)
-                            this.getString(R.string.abr_wednesday) -> newTask.days.add(3)
-                            this.getString(R.string.abr_thursday) -> newTask.days.add(4)
-                            this.getString(R.string.abr_friday) -> newTask.days.add(5)
-                            this.getString(R.string.abr_saturday) -> newTask.days.add(6)
+                            this.getString(R.string.abr_sunday) -> {
+                                newTask.days.add(0)
+                                newTask.repeatDates!!.add(genUtil.nextOrSameWithTime(DayOfWeek.SUNDAY, time))
+                            }
+                            this.getString(R.string.abr_monday) -> {
+                                newTask.days.add(1)
+                                newTask.repeatDates!!.add(genUtil.nextOrSameWithTime(DayOfWeek.MONDAY, time))
+                            }
+                            this.getString(R.string.abr_tuesday) -> {
+                                newTask.days.add(2)
+                                newTask.repeatDates!!.add(genUtil.nextOrSameWithTime(DayOfWeek.TUESDAY, time))
+                            }
+                            this.getString(R.string.abr_wednesday) -> {
+                                newTask.days.add(3)
+                                newTask.repeatDates!!.add(genUtil.nextOrSameWithTime(DayOfWeek.WEDNESDAY, time))
+                            }
+                            this.getString(R.string.abr_thursday) -> {
+                                newTask.days.add(4)
+                                newTask.repeatDates!!.add(genUtil.nextOrSameWithTime(DayOfWeek.THURSDAY, time))
+                            }
+                            this.getString(R.string.abr_friday) -> {
+                                newTask.days.add(5)
+                                newTask.repeatDates!!.add(genUtil.nextOrSameWithTime(DayOfWeek.FRIDAY, time))
+                            }
+                            this.getString(R.string.abr_saturday) -> {
+                                newTask.days.add(6)
+                                newTask.repeatDates!!.add(genUtil.nextOrSameWithTime(DayOfWeek.SATURDAY, time))
+                            }
                         }
                     }
                 newTask.days.sort()
