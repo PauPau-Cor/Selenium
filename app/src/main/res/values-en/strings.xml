@@ -69,4 +69,10 @@
     <string name="add_folder">Add folder</string>
     <string name="err_too_long">Exceeded character limit.</string>
     <string name="folder_uploaded">Folder created successfully.</string>
+    <string name="upTasks">Upcoming tasks</string>
+    <string name="upTask">Upcoming task</string>
+    <string name="upcomingTaskDayBody">%1$s must be finished by tomorrow</string>
+    <string name="upcomingTaskHourBody">%1$s must be finished in an hour</string>
+    <string name="dueTask">Task past due</string>
+    <string name="dueTaskBody">%1$s should be finished.</string>
 </resources>

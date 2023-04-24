@@ -109,7 +109,8 @@ class AddEditToDoActivity : AppCompatActivity() {
             userID = userModel.userID!!,
             title = binding.TaskTitle.editText?.text.toString().trim(),
             priority = priority,
-            categoryName = folder
+            categoryName = folder,
+            token = userModel.token
         )
 
         if(folder != this.getString(R.string.no_folder)){

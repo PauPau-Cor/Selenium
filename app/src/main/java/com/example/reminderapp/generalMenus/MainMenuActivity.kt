@@ -3,6 +3,7 @@ package com.example.reminderapp.generalMenus
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -41,16 +42,30 @@ class MainMenuActivity : AppCompatActivity() {
         userModel = intent.getParcelableExtra(Constants.PutExUser)!!
 
         drawerInit()
+        notifChannelsInit()
         getToken()
     }
 
+    private fun notifChannelsInit() {
+
+    }
+
     private fun getToken() {
-        FirebaseMessaging.getInstance().token.addOnSuccessListener {
-            token = it
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+            this.token = token
             if(userModel.token.contains(token)){
                 return@addOnSuccessListener
             }
-            db.collection(Constants.UsersCollection).document(userModel.userID!!).update(Constants.tokenField, FieldValue.arrayUnion(token))
+            val batch = db.batch()
+            val userRef = db.collection(Constants.UsersCollection).document(userModel.userID!!)
+            batch.update(userRef, Constants.tokenField, FieldValue.arrayUnion(token))
+            db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID).get().addOnSuccessListener { querySnapshot ->
+                querySnapshot.forEach{
+                    batch.update(it.reference, Constants.tokenField, FieldValue.arrayUnion(token))
+                    Toast.makeText(this, "waaa", Toast.LENGTH_SHORT).show()
+                }
+                batch.commit()
+            }
         }
     }
 
@@ -104,11 +119,18 @@ class MainMenuActivity : AppCompatActivity() {
     }
 
     private fun signOut() {
-        db.collection(Constants.UsersCollection).document(userModel.userID!!).update(Constants.tokenField, FieldValue.arrayRemove(token)).addOnSuccessListener {
-            mAuth.signOut()
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+        val batch = db.batch()
+        val userRef = db.collection(Constants.UsersCollection).document(userModel.userID!!)
+        batch.update(userRef, Constants.tokenField, FieldValue.arrayRemove(token))
+        db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID).get().addOnSuccessListener { querySnapshot ->
+            querySnapshot.forEach{
+                batch.update(it.reference, Constants.tokenField, FieldValue.arrayRemove(token))
+            }
+            batch.commit().addOnSuccessListener {
+                mAuth.signOut()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
         }
-
     }
 }

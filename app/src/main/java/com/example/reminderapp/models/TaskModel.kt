@@ -9,6 +9,7 @@ import java.util.Date
 data class TaskModel(
     @DocumentId val taskID: String? = null,
     val userID: String = "",
+    var token : ArrayList<String> = arrayListOf(),
     val title : String = "",
     val progress : Int = 0,
     var categoryID : String = "",

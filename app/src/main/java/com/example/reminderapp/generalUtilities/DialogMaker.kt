@@ -21,7 +21,7 @@ import java.time.format.FormatStyle
 
 class DialogMaker {
 
-    var date: LocalDateTime = LocalDateTime.now().withSecond(0)
+    var date: LocalDateTime = LocalDateTime.now().withSecond(0).withNano(0)
     fun pickDate(field: TextInputLayout, fragmentManager: FragmentManager) {
         val datePicker = DialogDatePicker { day, month, year -> run {
             date = date.withYear(year)

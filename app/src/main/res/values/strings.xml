@@ -93,5 +93,10 @@
     <string name="add_folder">Añadir categoria</string>
     <string name="err_too_long">El texto introducido es demasiado grande.</string>
     <string name="folder_uploaded">Categoria creada exitosamente.</string>
-
+    <string name="upTasks">Tareas proximas</string>
+    <string name="upTask">Tarea proxima</string>
+    <string name="upcomingTaskDayBody">%1$s debe ser terminad@ en un día.</string>
+    <string name="upcomingTaskHourBody">%1$s debe ser terminad@ en una hora.</string>
+    <string name="dueTask">Tarea en fecha</string>
+    <string name="dueTaskBody">%1$s debería estar terminada.</string>
 </resources>
