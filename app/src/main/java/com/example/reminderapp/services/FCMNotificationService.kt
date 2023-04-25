@@ -1,13 +1,10 @@
 package com.example.reminderapp.services
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationChannelGroup
 import android.app.NotificationManager
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.reminderapp.R
 import com.example.reminderapp.dataClasses.Constants
@@ -17,15 +14,13 @@ import com.google.firebase.messaging.RemoteMessage
 //TODO: Implement onNewToken()
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
 class FCMNotificationService : FirebaseMessagingService() {
+    @SuppressLint("MissingPermission")
     override fun onMessageReceived(message: RemoteMessage) {
-        super.onMessageReceived(message)
-
         getSystemService(NotificationManager::class.java).createNotificationChannelGroup(
             NotificationChannelGroup(
                 Constants.notifChannelGroupTasks,
                 getString(R.string.tasks))
         )
-
         val upTasksChannel = NotificationChannel(
             Constants.notifChannelUpTasks,
             getString(R.string.upTasks),
@@ -35,7 +30,7 @@ class FCMNotificationService : FirebaseMessagingService() {
 
         val dueTasksChannel = NotificationChannel(
             Constants.notifChannelDueTasks,
-            getString(R.string.upTasks),
+            getString(R.string.dueTask),
             NotificationManager.IMPORTANCE_HIGH
         )
         dueTasksChannel.group = Constants.notifChannelGroupTasks
@@ -74,17 +69,12 @@ class FCMNotificationService : FirebaseMessagingService() {
         val notification = Notification.Builder(this, channelId)
             .setContentTitle(title)
             .setContentText(body)
+            .setSmallIcon(R.drawable.ic_notif_logo)
             .setAutoCancel(false)
 
 
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
 
         NotificationManagerCompat.from(this).notify(message.data[Constants.notifDataID], 0, notification.build())
+        super.onMessageReceived(message)
     }
 }

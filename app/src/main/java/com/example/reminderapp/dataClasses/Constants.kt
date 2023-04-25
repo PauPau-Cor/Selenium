@@ -15,21 +15,16 @@ object Constants {
     const val categoryIDField = "categoryID"
     const val progressField = "progress"
     const val dateFinishedField = "dateFinished"
+    const val dueTypeField = "dueType"
 
     const val notifDataName = "NAME"
     const val notifDataID = "ID"
-
-    const val notifDataType = "TYPE"
-
-    const val notifTypeTask = "TASK"
 
     const val notifDataDesc = "DESC"
 
     const val notifDescUpTaskD = "UPCOMING_TASK_DAY"
     const val notifDescUpTaskH = "UPCOMING_TASK_HOUR"
     const val notifDescDueTask = "DUE_TASK"
-
-    const val defaultVal = "DEFAULT"
 
     const val notifChannelGroupTasks = "TSKS"
     const val notifChannelUpTasks = "UPC_TSK"

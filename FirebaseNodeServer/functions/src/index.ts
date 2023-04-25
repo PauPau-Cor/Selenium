@@ -7,14 +7,15 @@ const FCM = admin.messaging();
 
 const taskCollection = "tasks";
 const setDateField = "setDate";
+const progressField = "progress";
 
 const collapseKeyTasks = "TASK";
-
+/*
 const dataTypeProp = "TYPE";
 const dataIDProp = "ID";
 const dataDescProp = "DESC";
 const dataNameProp = "NAME";
-
+*/
 const notifDescUpTaskD = "UPCOMING_TASK_DAY";
 const notifDescUpTaskH = "UPCOMING_TASK_HOUR";
 const notifDescDueTask = "DUE_TASK";
@@ -54,10 +55,11 @@ const taskCreator = {
 exports.everyFive = functions.pubsub.schedule("*/5 * * * *").onRun(async () =>{
   const currentDate : Date = new Date();
   currentDate.setSeconds(0, 0);
-  const plusHour : Date = currentDate;
+  const plusHour : Date = new Date(currentDate);
   plusHour.setHours(currentDate.getHours()+1);
-  const tomorrow : Date = currentDate;
+  const tomorrow : Date = new Date(currentDate);
   tomorrow.setDate(currentDate.getDate()+1);
+
   const currentTimestamp = admin.firestore.Timestamp.fromDate(currentDate);
   const plusHourTimestamp = admin.firestore.Timestamp.fromDate(plusHour);
   const tomorrowTimestamp = admin.firestore.Timestamp.fromDate(tomorrow);
@@ -65,7 +67,8 @@ exports.everyFive = functions.pubsub.schedule("*/5 * * * *").onRun(async () =>{
   functions.logger.info("waos!", currentTimestamp);
 
   const tasksSnapshot = await db.collection(taskCollection)
-    .where(setDateField, "!=", currentTimestamp)
+    .where(setDateField, "==", currentTimestamp)
+    .where(progressField, "in", [0, 1])
     .withConverter(taskCreator).get();
 
   functions.logger.info(tasksSnapshot.size);
@@ -74,17 +77,23 @@ exports.everyFive = functions.pubsub.schedule("*/5 * * * *").onRun(async () =>{
     functions.logger.info(doc.id);
     const task : Task = doc.data();
     functions.logger.info("Hello logs!", task.title, task.setDate);
-    notification(task.token, task.title, 2, collapseKeyTasks, doc.id);
+    if (task.token !== undefined && task.token.length > 0) {
+      notification(task.token, task.title, 2, collapseKeyTasks, doc.id);
+    }
   });
 
   (await db.collection(taskCollection).withConverter(taskCreator)
-    .where(setDateField, "==", plusHourTimestamp).get()).forEach((doc) => {
+    .where(setDateField, "==", plusHourTimestamp)
+    .where(progressField, "in", [0, 1])
+    .get()).forEach((doc) => {
     const task : Task = doc.data();
     notification(task.token, task.title, 1, collapseKeyTasks, doc.id);
   });
 
   (await db.collection(taskCollection).withConverter(taskCreator)
-    .where(setDateField, "==", tomorrowTimestamp).get()).forEach((doc) => {
+    .where(setDateField, "==", tomorrowTimestamp)
+    .where(progressField, "in", [0, 1])
+    .get()).forEach((doc) => {
     const task : Task = doc.data();
     notification(task.token, task.title, 0, collapseKeyTasks, doc.id);
   });
@@ -96,14 +105,14 @@ exports.everyFive = functions.pubsub.schedule("*/5 * * * *").onRun(async () =>{
  * @param {string} Name name of task, event or ocurrence to alert about
  * @param {number} Type Type of notification to send
  * @param {string} CollapseKey collapseKey to use in notification
- * @param {string} ID ID of document to Intent to when opening notification
+ * @param {string} id ID of document to Intent to when opening notification
  */
 async function notification(
   Tokens : Array<string>,
   Name : string,
   Type : number,
   CollapseKey : string,
-  ID? : string,
+  id : string,
 ) {
   let desc : string;
   switch (Type) {
@@ -127,20 +136,17 @@ async function notification(
 
   const message : MulticastMessage = {
     tokens: Tokens,
-    android: {
-      collapseKey: CollapseKey,
-    },
   };
 
-  if (message.android !== undefined && ID !== undefined) {
-    message.android.data = {
-      [dataTypeProp]: CollapseKey,
-      [dataIDProp]: ID,
-      [dataDescProp]: desc,
-      [dataNameProp]: Name,
-    };
-  }
+  message.data = {
+    TYPE: CollapseKey,
+    ID: id,
+    DESC: desc,
+    NAME: Name,
+  };
 
   const fails = (await FCM.sendEachForMulticast(message)).failureCount;
-  functions.logger.info(fails);
+  if (fails) {
+    functions.logger.error("Notification(s) failed!", fails);
+  }
 }

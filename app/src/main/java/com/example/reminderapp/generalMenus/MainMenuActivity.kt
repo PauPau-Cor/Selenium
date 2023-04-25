@@ -59,7 +59,8 @@ class MainMenuActivity : AppCompatActivity() {
             val batch = db.batch()
             val userRef = db.collection(Constants.UsersCollection).document(userModel.userID!!)
             batch.update(userRef, Constants.tokenField, FieldValue.arrayUnion(token))
-            db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID).get().addOnSuccessListener { querySnapshot ->
+            db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID)
+                .whereNotEqualTo(Constants.dueTypeField, 0).get().addOnSuccessListener { querySnapshot ->
                 querySnapshot.forEach{
                     batch.update(it.reference, Constants.tokenField, FieldValue.arrayUnion(token))
                     Toast.makeText(this, "waaa", Toast.LENGTH_SHORT).show()
