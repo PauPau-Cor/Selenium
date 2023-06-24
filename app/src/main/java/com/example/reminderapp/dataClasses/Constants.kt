@@ -17,6 +17,7 @@ object Constants {
     const val dateFinishedField = "dateFinished"
     const val dueTypeField = "dueType"
     const val setDateField = "setDate"
+    const val daysField = "days"
 
     const val notifDataName = "NAME"
     const val notifDataID = "ID"

@@ -7,12 +7,16 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.example.reminderapp.R
+import com.example.reminderapp.adapters.TodayWeeklyTasksAdapter
 import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.databinding.FragmentHomeBinding
+import com.example.reminderapp.generalUtilities.WrappedLinearLayoutManager
 import com.example.reminderapp.models.CategoryModel
 import com.example.reminderapp.models.TaskModel
 import com.example.reminderapp.models.UserModel
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.transition.MaterialSharedAxis
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -20,13 +24,16 @@ import com.google.firebase.firestore.ktx.toObject
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var userModel : UserModel
     private lateinit var db : FirebaseFirestore
+    private lateinit var adapter: TodayWeeklyTasksAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +57,7 @@ class HomeFragment : Fragment() {
         binding.wlcMsg.text = getString(R.string.welcome, userModel.name)
 
         setUpcomingTaskData()
+        setUpWeeklyTodayTasks()
         setUpRecentFolder()
     }
 
@@ -90,6 +98,19 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+    private fun setUpWeeklyTodayTasks(){
+        val currentDate = Calendar.getInstance(Locale.getDefault())
+        val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID)
+            .whereEqualTo(Constants.dueTypeField, 2).whereArrayContains(Constants.daysField, currentDate.get(Calendar.DAY_OF_WEEK)-1)
+            .whereEqualTo(Constants.progressField, 0)
+        val options = FirestoreRecyclerOptions.Builder<TaskModel>()
+            .setQuery(query, TaskModel::class.java).setLifecycleOwner(this).build()
+        adapter = TodayWeeklyTasksAdapter(options, binding.todNoResults)
+        binding.todList.adapter = adapter
+        binding.todList.layoutManager = WrappedLinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL)
+
+    }
     
     private fun setUpRecentFolder(){
         val query = db.collection(Constants.CategoriesCollection).whereEqualTo(Constants.userIDField, userModel.userID)
@@ -100,6 +121,16 @@ class HomeFragment : Fragment() {
                 binding.recentFolTitle.text = recentFolder.title
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        adapter.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.stopListening()
     }
 
     companion object {

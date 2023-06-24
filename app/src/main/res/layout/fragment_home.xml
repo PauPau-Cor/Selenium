@@ -40,7 +40,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="10dp"
                 android:paddingVertical="20dp">
 
                 <ImageView
@@ -62,6 +61,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="15dp"
                     style="@style/CRD">
 
@@ -77,9 +77,8 @@
                             android:layout_height="wrap_content"
                             android:text="@string/title"
                             android:textSize="15sp"
-                            android:layout_marginTop="15dp"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/upTaskPrio"
                             android:fontFamily="@font/louiscafebold"/>
 
                         <ImageView
@@ -136,6 +135,7 @@
                     android:text="@string/today"
                     android:textSize="18sp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="10dp"
                     app:layout_constraintTop_toBottomOf="@id/upcmnCrd"
                     app:layout_constraintStart_toStartOf="parent"
                     android:fontFamily="@font/louiscafebold"/>
@@ -144,6 +144,8 @@
                     android:id="@+id/todList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingHorizontal="5dp"
+                    android:clipToPadding="false"
                     app:layout_constraintTop_toBottomOf="@id/todIndicator"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
@@ -185,6 +187,7 @@
                     android:text="@string/folders"
                     android:textSize="18sp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="10dp"
                     app:layout_constraintTop_toBottomOf="@id/todNoResultsTXT"
                     app:layout_constraintStart_toStartOf="parent"
                     android:fontFamily="@font/louiscafebold"/>
@@ -197,6 +200,7 @@
                     app:layout_constraintEnd_toStartOf="@id/recentFolder"
                     app:layout_constraintTop_toBottomOf="@id/folIndicator"
                     android:layout_marginEnd="2dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     style="@style/CRD">
 
@@ -235,6 +239,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
+                    android:layout_marginEnd="10dp"
                     app:layout_constraintStart_toEndOf="@id/defaultFolder"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/folIndicator"
@@ -271,6 +276,45 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </com.google.android.material.card.MaterialCardView>
+
+                <!--<com.google.android.material.card.MaterialCardView
+                    android:id="@+id/calendar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recentFolder"
+                    android:layout_marginTop="10dp"
+                    style="@style/CRD">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_marginHorizontal="7dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.github.sundeepk.compactcalendarview.CompactCalendarView
+                            android:id="@+id/FamPatViewSumCalendar"
+                            android:layout_width="0dp"
+                            android:layout_height="300dp"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="10dp"
+                            app:compactCalendarTextSize="13sp"
+                            app:compactCalendarTextColor="#000000"
+                            app:compactCalendarBackgroundColor="@color/darkerwhite"
+                            app:compactCalendarCurrentDayTextColor="#277989"
+                            app:compactCalendarCurrentDayBackgroundColor="#58B5C8"
+                            app:compactCalendarCurrentSelectedDayBackgroundColor="#3298AC"
+                            app:compactCalendarMultiEventIndicatorColor="@color/darkerblack"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>-->
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
