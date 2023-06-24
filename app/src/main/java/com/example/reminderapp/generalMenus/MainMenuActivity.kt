@@ -90,7 +90,6 @@ class MainMenuActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.NavigationView.setCheckedItem(R.id.nav_feed)
-        showFragment(HomeFragment.newInstance(userModel))
 
         binding.NavigationView.setNavigationItemSelectedListener {
             binding.DrawerLayout.closeDrawers()

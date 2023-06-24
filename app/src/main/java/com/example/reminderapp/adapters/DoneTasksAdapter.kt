@@ -43,7 +43,6 @@ class DoneTasksAdapter(options : FirestoreRecyclerOptions<TaskModel>) : Firestor
             if(itemCount != 0){
                 db = FirebaseFirestore.getInstance()
                 db.collection(Constants.TasksCollection).document(model.taskID!!).delete()
-                notifyItemRemoved(position)
             }
         }
     }

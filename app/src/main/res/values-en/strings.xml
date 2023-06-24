@@ -75,4 +75,8 @@
     <string name="upcomingTaskHourBody">%1$s must be finished in an hour</string>
     <string name="dueTask">Task past due</string>
     <string name="dueTaskBody">%1$s should be finished.</string>
+    <string name="today">Today</string>
+    <string name="no_upc_task">No upcoming tasks.</string>
+    <string name="welcome">Welcome %1$s.</string>
+    <string name="no_rep_tasks">You have no weekly tasks scheduled for today</string>
 </resources>

@@ -99,4 +99,8 @@
     <string name="upcomingTaskHourBody">%1$s debe ser terminad@ en una hora.</string>
     <string name="dueTask">Tarea en fecha</string>
     <string name="dueTaskBody">%1$s debería estar terminada.</string>
+    <string name="today">Hoy</string>
+    <string name="no_upc_task">No tiene tareas proximas.</string>
+    <string name="welcome">Bienvenid@ %1$s.</string>
+    <string name="no_rep_tasks">No se han encontrado tareas semanales para hoy</string>
 </resources>

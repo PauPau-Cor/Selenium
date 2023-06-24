@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/midpoint_green_main</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/darkestblack</item>
+        <item name="android:statusBarColor">@color/main_blue</item>
         <item name="android:windowLightStatusBar">false</item>
         <!-- Customize your theme here. -->
 
@@ -68,6 +68,11 @@
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.MediumComponent</item>
     </style>
 
+    <style name="CRDBG" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="shapeAppearanceOverlay">@style/CRDAPPEARTOPCORNERS</item>
+    </style>
+
     <style name="ShapeAppearance.App.MediumComponent" parent="">
         <item name="cornerFamily">cut</item>
         <item name="cornerSize">10dp</item>
@@ -85,19 +90,27 @@
 
     <style name="DRWRHDR">
         <item name="cardBackgroundColor">@color/darkestblack</item>
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners</item>
+        <item name="shapeAppearanceOverlay">@style/CRDAPPEARBTTMCORNERS</item>
     </style>
 
     <style name="CRDMENU">
         <item name="cardBackgroundColor">@color/darkerblack</item>
     </style>
 
-    <style name="ShapeAppearanceOverlay_card_custom_corners" parent="">
+    <style name="CRDAPPEARBTTMCORNERS" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopRight">0dp</item>
         <item name="cornerSizeTopLeft">0dp</item>
         <item name="cornerSizeBottomRight">20dp</item>
         <item name="cornerSizeBottomLeft">20dp</item>
+    </style>
+
+    <style name="CRDAPPEARTOPCORNERS" parent="">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
     <style name="EXFAB" >

@@ -42,7 +42,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx:24.5.0'
     implementation 'com.firebaseui:firebase-ui-firestore:8.0.1'
     implementation 'com.google.firebase:firebase-auth-ktx:21.3.0'
-    implementation 'androidx.core:core-splashscreen:1.0.0'
+    implementation 'androidx.core:core-splashscreen:1.0.1'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'

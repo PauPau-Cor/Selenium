@@ -20,7 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/TOLBR">
+            style="@style/TOLBR">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/Toolbar"

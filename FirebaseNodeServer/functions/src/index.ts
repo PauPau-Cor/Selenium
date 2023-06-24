@@ -97,6 +97,14 @@ exports.everyFive = functions.pubsub.schedule("*/5 * * * *").onRun(async () =>{
     const task : Task = doc.data();
     notification(task.token, task.title, 0, collapseKeyTasks, doc.id);
   });
+
+  (await db.collection(taskCollection).withConverter(taskCreator)
+    .where("repeatDates", "array-contains", currentTimestamp)
+    .where(progressField, "in", [0, 1])
+    .get()).forEach((doc) => {
+    const task : Task = doc.data();
+    notification(task.token, task.title, 0, collapseKeyTasks, doc.id);
+  });
 });
 
 /**
