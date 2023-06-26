@@ -56,12 +56,36 @@ class HomeFragment : Fragment() {
 
         binding.wlcMsg.text = getString(R.string.welcome, userModel.name)
 
-        setUpcomingTaskData()
-        setUpWeeklyTodayTasks()
-        setUpRecentFolder()
+        setupPastDueTaskData()
+        setupUpcomingTaskData()
+        setupWeeklyTodayTasks()
+        setupRecentFolder()
     }
 
-    private fun setUpcomingTaskData() {
+    private fun setupPastDueTaskData() {
+        var currentDate = Date()
+        val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID)
+            .whereEqualTo(Constants.dueTypeField, 1).whereEqualTo(Constants.progressField, 0)
+            .whereLessThanOrEqualTo(Constants.setDateField, currentDate)
+            .orderBy(Constants.setDateField, Query.Direction.DESCENDING).limit(1)
+        query.addSnapshotListener{ value, error ->
+            if (error == null && value != null && !value.isEmpty) {
+                binding.pastDueGroup.visibility = VISIBLE
+                val pastDueTask: TaskModel = value.documents[0].toObject()!!
+                binding.pastDueTitle.text = pastDueTask.title
+
+                val localTime = pastDueTask.setDate!!.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+                binding.pastDueTime.text = localTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))
+
+                currentDate = Date()
+            }else{
+                binding.pastDueGroup.visibility = GONE
+                currentDate = Date()
+            }
+        }
+    }
+
+    private fun setupUpcomingTaskData() {
         var currentDate = Date()
         val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID)
             .whereEqualTo(Constants.dueTypeField, 1).whereEqualTo(Constants.progressField, 0)
@@ -99,7 +123,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setUpWeeklyTodayTasks(){
+    private fun setupWeeklyTodayTasks(){
         val currentDate = Calendar.getInstance(Locale.getDefault())
         val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID)
             .whereEqualTo(Constants.dueTypeField, 2).whereArrayContains(Constants.daysField, currentDate.get(Calendar.DAY_OF_WEEK)-1)
@@ -109,10 +133,9 @@ class HomeFragment : Fragment() {
         adapter = TodayWeeklyTasksAdapter(options, binding.todNoResults)
         binding.todList.adapter = adapter
         binding.todList.layoutManager = WrappedLinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL)
-
     }
     
-    private fun setUpRecentFolder(){
+    private fun setupRecentFolder(){
         val query = db.collection(Constants.CategoriesCollection).whereEqualTo(Constants.userIDField, userModel.userID)
             .orderBy(Constants.lastEditedField, Query.Direction.DESCENDING)
         query.addSnapshotListener{ value, error ->
