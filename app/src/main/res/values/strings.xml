@@ -103,4 +103,7 @@
     <string name="no_upc_task">No tiene tareas proximas.</string>
     <string name="welcome">Bienvenid@ %1$s.</string>
     <string name="no_rep_tasks">No se han encontrado tareas semanales para hoy</string>
+    <string name="ACT_edit">Editar</string>
+    <string name="no_date_tasks">Tareas sin fecha</string>
+    <string name="no_nodate_task">No tiene tareas con fecha indeterminada.</string>
 </resources>

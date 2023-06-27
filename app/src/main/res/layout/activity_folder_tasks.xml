@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".toDoMenus.FolderTasksActivity"
+    style="@style/BG">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/folderInfoCard"
+        tools:viewBindingIgnore="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/CRDMENU">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/folderIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_folder"
+                app:tint="@color/black"
+                tools:viewBindingIgnore="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:id="@+id/FolderTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/PH_folder"
+                app:layout_constraintStart_toEndOf="@id/folderIcon"
+                app:layout_constraintTop_toTopOf="@id/folderIcon"
+                app:layout_constraintBottom_toTopOf="@id/folderDate"
+                android:layout_marginStart="5dp"
+                android:textSize="19sp"
+                android:fontFamily="@font/planner"
+                android:textStyle="bold"
+                style="@style/TXT"/>
+
+            <TextView
+                android:id="@+id/folderDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/date"
+                app:layout_constraintStart_toEndOf="@id/folderIcon"
+                app:layout_constraintTop_toBottomOf="@id/FolderTitle"
+                app:layout_constraintBottom_toBottomOf="@id/folderIcon"
+                android:layout_marginStart="5dp"
+                android:textSize="15sp"
+                android:fontFamily="@font/louiscafe"
+                style="@style/TXT"
+                />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_edit"
+                app:tint="@color/black"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/ACT_edit" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/upcIndicator"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/upTasks"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintTop_toBottomOf="@id/folderInfoCard"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/louiscafebold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/upcRV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:paddingHorizontal="5dp"
+        android:clipToPadding="false"
+        tools:listitem="@layout/holder_set_date_task"
+        app:layout_constraintTop_toBottomOf="@+id/upcIndicator"
+        app:layout_constraintBottom_toTopOf="@id/weeklyIndicator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:visibility="invisible"
+        android:id="@+id/upcNoResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="upcNoResultsIMG, upcNoResultsTXT"/>
+
+    <ImageView
+        android:id="@+id/upcNoResultsIMG"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_happy"
+        app:tint="@color/darkestwhite"
+        app:layout_constraintTop_toTopOf="@id/upcRV"
+        app:layout_constraintBottom_toBottomOf="@id/upcRV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/upcNoResultsTXT"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/no_upc_task"
+        android:layout_marginHorizontal="25dp"
+        android:textAlignment="center"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@id/upcNoResultsIMG"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/louiscafe"/>
+
+    <TextView
+        android:id="@+id/weeklyIndicator"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/today"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintTop_toBottomOf="@id/upcRV"
+        app:layout_constraintBottom_toTopOf="@id/weeklyNoResultsIMG"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/louiscafebold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/weeklyRV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        android:paddingHorizontal="5dp"
+        android:clipToPadding="false"
+        tools:listitem="@layout/holder_weekly_today_task"
+        app:layout_constraintTop_toBottomOf="@+id/weeklyIndicator"
+        app:layout_constraintBottom_toTopOf="@id/noDateIndicator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:visibility="invisible"
+        android:id="@+id/weeklyNoResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="weeklyNoResultsIMG, weeklyNoResultsTXT"/>
+
+    <ImageView
+        android:id="@+id/weeklyNoResultsIMG"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_happy"
+        app:tint="@color/darkestwhite"
+        app:layout_constraintTop_toBottomOf="@id/weeklyIndicator"
+        app:layout_constraintBottom_toTopOf="@id/weeklyNoResultsTXT"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/weeklyNoResultsTXT"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/no_rep_tasks"
+        android:layout_marginHorizontal="25dp"
+        android:textAlignment="center"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@id/weeklyNoResultsIMG"
+        app:layout_constraintBottom_toTopOf="@id/noDateIndicator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/louiscafe"/>
+
+    <TextView
+        android:id="@+id/noDateIndicator"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/no_date_tasks"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintTop_toBottomOf="@id/weeklyNoResultsTXT"
+        app:layout_constraintBottom_toTopOf="@id/noDateRV"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/louiscafebold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/noDateRV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:paddingHorizontal="5dp"
+        android:clipToPadding="false"
+        tools:listitem="@layout/holder_simple_task"
+        app:layout_constraintTop_toBottomOf="@+id/noDateIndicator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:visibility="invisible"
+        android:id="@+id/noDateNoResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="noDateNoResultsIMG, noDateNoResultsTXT"/>
+
+    <ImageView
+        android:id="@+id/noDateNoResultsIMG"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_happy"
+        app:tint="@color/darkestwhite"
+        app:layout_constraintTop_toTopOf="@id/noDateRV"
+        app:layout_constraintBottom_toBottomOf="@id/noDateRV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/noDateNoResultsTXT"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/no_nodate_task"
+        android:layout_marginHorizontal="25dp"
+        android:textAlignment="center"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@id/noDateNoResultsIMG"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/louiscafe"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

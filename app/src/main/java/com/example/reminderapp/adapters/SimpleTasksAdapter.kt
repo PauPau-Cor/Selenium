@@ -25,9 +25,15 @@ class SimpleTasksAdapter(options: FirestoreRecyclerOptions<TaskModel>, private v
     private val viewTypeSimpleTask = 0
     private val viewTypeSetDateTask = 1
     private val viewTypeRepeatingTask = 2
+    private val viewTypeMissingSetDateTask = 3
 
     override fun getItemViewType(position: Int): Int {
-        return getItem(position).dueType
+        val model = getItem(position)
+        return if(model.dueType == viewTypeSetDateTask && Date().after(model.setDate)){
+            viewTypeMissingSetDateTask
+        }else{
+            model.dueType
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimpleTasksViewHolder {
@@ -41,13 +47,19 @@ class SimpleTasksAdapter(options: FirestoreRecyclerOptions<TaskModel>, private v
             viewTypeSetDateTask -> {
                 val view: View = LayoutInflater.from(parent.context)
                     .inflate(R.layout.holder_set_date_task, parent, false)
-                SetDateTasksViewHolder(view)
+                SetDateTasksViewHolder(view, false)
             }
 
             viewTypeRepeatingTask -> {
                 val view: View = LayoutInflater.from(parent.context)
                     .inflate(R.layout.holder_repeating_task, parent, false)
                 RepeatingTasksViewHolder(view, context)
+            }
+
+            viewTypeMissingSetDateTask -> {
+                val view: View = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.holder_missed_set_date_task, parent, false)
+                SetDateTasksViewHolder(view, true)
             }
 
             else -> {
@@ -60,7 +72,7 @@ class SimpleTasksAdapter(options: FirestoreRecyclerOptions<TaskModel>, private v
     }
 
     override fun onBindViewHolder(holder: SimpleTasksViewHolder, position: Int, model: TaskModel) {
-        holder.setData(model, db)
+        holder.setData(model, db, false)
     }
 }
 
@@ -71,19 +83,21 @@ open class SimpleTasksViewHolder(itemView: View) : ViewHolder(itemView){
     private val taskDone : ImageView= itemView.findViewById(R.id.doneBtn)
     private val taskProgressIndicator : ImageView = itemView.findViewById(R.id.ProgressIndicator)
 
-    open fun setData(model: TaskModel, db: FirebaseFirestore){
+    open fun setData(model: TaskModel, db: FirebaseFirestore, missing: Boolean = false){
         taskTitle.text = model.title
         taskCategory.text = model.categoryName
 
-        when(model.priority){
-            0 ->{
-                taskPriority.setImageResource(R.drawable.ic_prio_low)
-            }
-            1 ->{
-                taskPriority.setImageResource(R.drawable.ic_prio_mid)
-            }
-            2 ->{
-                taskPriority.setImageResource(R.drawable.ic_prio_high)
+        if(!missing){
+            when(model.priority){
+                0 ->{
+                    taskPriority.setImageResource(R.drawable.ic_prio_low)
+                }
+                1 ->{
+                    taskPriority.setImageResource(R.drawable.ic_prio_mid)
+                }
+                2 ->{
+                    taskPriority.setImageResource(R.drawable.ic_prio_high)
+                }
             }
         }
 
@@ -99,11 +113,11 @@ open class SimpleTasksViewHolder(itemView: View) : ViewHolder(itemView){
     }
 }
 
-class RepeatingTasksViewHolder(itemView: View, private val context: Context) : SimpleTasksViewHolder(itemView){
+open class RepeatingTasksViewHolder(itemView: View, private val context: Context) : SimpleTasksViewHolder(itemView){
     private val taskTime: TextView = itemView.findViewById(R.id.TaskTime)
 
-    override fun setData(model: TaskModel, db: FirebaseFirestore){
-        super.setData(model, db)
+    override fun setData(model: TaskModel, db: FirebaseFirestore, missing: Boolean) {
+        super.setData(model, db, false)
         val localTime = model.repeatDates?.get(0)?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDateTime()
         var repeatsConcat = localTime?.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)) + " "
         if(model.days.size == 7){
@@ -154,13 +168,20 @@ class RepeatingTasksViewHolder(itemView: View, private val context: Context) : S
     }
 }
 
-class SetDateTasksViewHolder(itemView: View) : SimpleTasksViewHolder(itemView){
+open class SetDateTasksViewHolder(itemView: View, private val pastDue: Boolean) : SimpleTasksViewHolder(itemView){
     private val taskDate: TextView = itemView.findViewById(R.id.TaskDate)
 
     @SuppressLint("SetTextI18n")
-    override fun setData(model: TaskModel, db: FirebaseFirestore){
-        super.setData(model, db)
+    override fun setData(model: TaskModel, db: FirebaseFirestore, missing: Boolean) {
+        super.setData(model, db, pastDue)
         val localTime = model.setDate!!.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
         taskDate.text = localTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))
+
+        if(pastDue){
+            val taskIgnore: ImageView = itemView.findViewById(R.id.ignoreBtn)
+            taskIgnore.setOnClickListener{
+                db.collection(Constants.TasksCollection).document(model.taskID!!).update(Constants.progressField, 1, Constants.dateFinishedField, Date())
+            }
+        }
     }
 }

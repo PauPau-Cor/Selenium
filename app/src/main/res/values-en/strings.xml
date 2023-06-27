@@ -76,7 +76,10 @@
     <string name="dueTask">Task past due</string>
     <string name="dueTaskBody">%1$s should be finished.</string>
     <string name="today">Today</string>
-    <string name="no_upc_task">No upcoming tasks.</string>
+    <string name="no_upc_task">You have no upcoming tasks.</string>
     <string name="welcome">Welcome %1$s.</string>
     <string name="no_rep_tasks">You have no weekly tasks scheduled for today</string>
+    <string name="ACT_edit">Edit</string>
+    <string name="no_date_tasks">Tasks with no date</string>
+    <string name="no_nodate_task">You have no task that do not have a date.</string>
 </resources>

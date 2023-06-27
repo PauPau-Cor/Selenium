@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Date
 
-class TodayWeeklyTasksAdapter(options: FirestoreRecyclerOptions<TaskModel>, val group: Group) : FirestoreRecyclerAdapter<TaskModel, WeeklyTodayTaskHolder>(options) {
+class TodayWeeklyTasksAdapter(options: FirestoreRecyclerOptions<TaskModel>, private val group: Group) : FirestoreRecyclerAdapter<TaskModel, WeeklyTodayTaskHolder>(options) {
 
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 

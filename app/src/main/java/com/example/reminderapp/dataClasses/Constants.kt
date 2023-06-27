@@ -2,6 +2,7 @@ package com.example.reminderapp.dataClasses
 
 object Constants {
     const val PutExUser = "UserModel"
+    const val PutExFolder = "FolderModel"
 
     const val UsersCollection = "users"
     const val userIDField = "userID"

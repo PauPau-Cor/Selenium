@@ -246,12 +246,14 @@
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="5dp"
                     android:clipToPadding="false"
+                    tools:listitem="@layout/holder_weekly_today_task"
                     app:layout_constraintTop_toBottomOf="@id/todIndicator"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
                     />
 
                 <androidx.constraintlayout.widget.Group
+                    android:visibility="invisible"
                     android:id="@+id/todNoResults"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

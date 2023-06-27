@@ -59,7 +59,7 @@ class FoldersFragment : Fragment() {
             .orderBy(Constants.lastEditedField, Query.Direction.DESCENDING)
         val options = FirestoreRecyclerOptions.Builder<CategoryModel>()
             .setQuery(query, CategoryModel::class.java).setLifecycleOwner(this).build()
-        adapter = FoldersAdapter(options)
+        adapter = FoldersAdapter(options, userModel, requireContext())
         binding.FoldersList.adapter = adapter
         binding.FoldersList.layoutManager = WrappedGridLayoutManager(requireContext(), 2)
     }

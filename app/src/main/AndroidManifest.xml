@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReminderApp"
         tools:targetApi="31">
+        <activity
+            android:name=".toDoMenus.FolderTasksActivity"
+            android:exported="false" />
         <activity
             android:name=".toDoMenus.AddEditToDoActivity"
             android:exported="false" />
