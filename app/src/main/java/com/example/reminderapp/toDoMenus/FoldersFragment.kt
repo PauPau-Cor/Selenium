@@ -1,10 +1,11 @@
 package com.example.reminderapp.toDoMenus
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.reminderapp.adapters.FoldersAdapter
 import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.databinding.FragmentFoldersBinding
@@ -43,6 +44,13 @@ class FoldersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRV()
         setupAddFolderBT()
+        setupDefaultFolderBT()
+    }
+
+    private fun setupDefaultFolderBT() {
+        binding.defaultFolder.setOnClickListener {
+            startActivity(Intent(context, FolderTasksActivity::class.java).putExtra(Constants.PutExUser, userModel))
+        }
     }
 
     private fun setupAddFolderBT() {

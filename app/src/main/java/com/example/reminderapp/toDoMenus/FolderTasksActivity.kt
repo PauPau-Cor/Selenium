@@ -1,8 +1,10 @@
 package com.example.reminderapp.toDoMenus
 
 import android.os.Bundle
+import android.view.View.GONE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.reminderapp.R
 import com.example.reminderapp.adapters.FolderTasksAdapter
 import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.databinding.ActivityFolderTasksBinding
@@ -35,12 +37,20 @@ class FolderTasksActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         @Suppress("DEPRECATION")
         userModel = intent.getParcelableExtra(Constants.PutExUser)!!
-        @Suppress("DEPRECATION")
-        folderModel = intent.getParcelableExtra(Constants.PutExFolder)!!
+        if(intent.hasExtra(Constants.PutExFolder)){
+            @Suppress("DEPRECATION")
+            folderModel = intent.getParcelableExtra(Constants.PutExFolder)!!
+
+            val localTime = folderModel.lastEdited.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+            binding.folderDate.text = localTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))
+        }else{
+            folderModel = CategoryModel("", title= getString(R.string.no_folder))
+            binding.folderDate.visibility = GONE
+        }
+
 
         binding.FolderTitle.text = folderModel.title
-        val localTime = folderModel.lastEdited.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
-        binding.folderDate.text = localTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))
+
 
         setUpUpc()
         setUpWeekly()

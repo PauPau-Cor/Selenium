@@ -1,5 +1,6 @@
 package com.example.reminderapp.generalMenus
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.example.reminderapp.generalUtilities.WrappedLinearLayoutManager
 import com.example.reminderapp.models.CategoryModel
 import com.example.reminderapp.models.TaskModel
 import com.example.reminderapp.models.UserModel
+import com.example.reminderapp.toDoMenus.FolderTasksActivity
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.transition.MaterialSharedAxis
 import com.google.firebase.firestore.FirebaseFirestore
@@ -59,7 +61,7 @@ class HomeFragment : Fragment() {
         setupPastDueTaskData()
         setupUpcomingTaskData()
         setupWeeklyTodayTasks()
-        setupRecentFolder()
+        setupFolders()
     }
 
     private fun setupPastDueTaskData() {
@@ -135,14 +137,23 @@ class HomeFragment : Fragment() {
         binding.todList.layoutManager = WrappedLinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL)
     }
     
-    private fun setupRecentFolder(){
+    private fun setupFolders(){
         val query = db.collection(Constants.CategoriesCollection).whereEqualTo(Constants.userIDField, userModel.userID)
             .orderBy(Constants.lastEditedField, Query.Direction.DESCENDING)
         query.addSnapshotListener{ value, error ->
             if (error == null && value != null && !value.isEmpty) {
                 val recentFolder: CategoryModel = value.documents[0].toObject()!!
                 binding.recentFolTitle.text = recentFolder.title
+
+                binding.recentFolder.setOnClickListener{
+                    startActivity(Intent(context, FolderTasksActivity::class.java)
+                        .putExtra(Constants.PutExFolder, recentFolder).putExtra(Constants.PutExUser, userModel))
+                }
             }
+        }
+
+        binding.defaultFolder.setOnClickListener {
+            startActivity(Intent(context, FolderTasksActivity::class.java).putExtra(Constants.PutExUser, userModel))
         }
     }
 
