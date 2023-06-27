@@ -10,10 +10,12 @@ object Constants {
 
     const val CategoriesCollection = "categories"
     const val lastEditedField = "lastEdited"
+    const val titleField= "title"
 
     const val TasksCollection = "tasks"
     const val priorityField = "priority"
     const val categoryIDField = "categoryID"
+    const val categoryNameField = "categoryName"
     const val progressField = "progress"
     const val dateFinishedField = "dateFinished"
     const val dueTypeField = "dueType"

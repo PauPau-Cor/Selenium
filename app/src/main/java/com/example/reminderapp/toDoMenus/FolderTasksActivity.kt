@@ -8,6 +8,7 @@ import com.example.reminderapp.R
 import com.example.reminderapp.adapters.FolderTasksAdapter
 import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.databinding.ActivityFolderTasksBinding
+import com.example.reminderapp.generalUtilities.DialogMaker
 import com.example.reminderapp.generalUtilities.WrappedLinearLayoutManager
 import com.example.reminderapp.models.CategoryModel
 import com.example.reminderapp.models.TaskModel
@@ -37,17 +38,8 @@ class FolderTasksActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         @Suppress("DEPRECATION")
         userModel = intent.getParcelableExtra(Constants.PutExUser)!!
-        if(intent.hasExtra(Constants.PutExFolder)){
-            @Suppress("DEPRECATION")
-            folderModel = intent.getParcelableExtra(Constants.PutExFolder)!!
 
-            val localTime = folderModel.lastEdited.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
-            binding.folderDate.text = localTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))
-        }else{
-            folderModel = CategoryModel("", title= getString(R.string.no_folder))
-            binding.folderDate.visibility = GONE
-        }
-
+        setUpFolderModelOrDefault()
 
         binding.FolderTitle.text = folderModel.title
 
@@ -55,7 +47,28 @@ class FolderTasksActivity : AppCompatActivity() {
         setUpUpc()
         setUpWeekly()
         setUpNoDate()
+        setUpAdd()
     }
+
+    private fun setUpFolderModelOrDefault() {
+        if(intent.hasExtra(Constants.PutExFolder)){
+            @Suppress("DEPRECATION")
+            folderModel = intent.getParcelableExtra(Constants.PutExFolder)!!
+
+            val localTime = folderModel.lastEdited.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+            binding.folderDate.text = localTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))
+
+            val dialogMaker = DialogMaker()
+            binding.editFolderBtn.setOnClickListener{
+                dialogMaker.editFolder(supportFragmentManager, binding.root, db, folderModel)
+            }
+        }else{
+            folderModel = CategoryModel("", title= getString(R.string.no_folder))
+            binding.folderDate.visibility = GONE
+            binding.editFolderBtn.visibility = GONE
+        }
+    }
+
     private fun setUpUpc() {
         val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.categoryIDField, folderModel.categoryID)
             .whereEqualTo(Constants.dueTypeField, 1).orderBy(Constants.setDateField)
@@ -87,6 +100,10 @@ class FolderTasksActivity : AppCompatActivity() {
         noDateAdapter = FolderTasksAdapter(options, this, binding.noDateNoResults)
         binding.noDateRV.adapter = noDateAdapter
         binding.noDateRV.layoutManager = WrappedLinearLayoutManager(this)
+    }
+
+    private fun setUpAdd() {
+
     }
 
     override fun onStart() {

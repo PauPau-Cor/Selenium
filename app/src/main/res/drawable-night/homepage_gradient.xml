@@ -4,9 +4,9 @@
     xmlns:android = "http://schemas.android.com/apk/res/android" >
 
     <gradient
-        android:startColor = "@color/white"
-        android:centerColor="@color/purplewhite"
-        android:endColor = "@color/purplewhite"
+        android:startColor = "@color/black"
+        android:centerColor="@color/purple"
+        android:endColor = "@color/purple"
         android:angle = "90"
         android:centerX=".4"
         android:type = "linear" />

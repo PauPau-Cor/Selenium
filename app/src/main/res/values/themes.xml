@@ -48,6 +48,10 @@
         <item name="iconTint">@color/black</item>
     </style>
 
+    <style name="IVICN">
+        <item name="tint">@color/black</item>
+    </style>
+
     <style name="FAB">
         <item name="backgroundTint">@color/lightcolor</item>
         <item name="tint">@color/black</item>

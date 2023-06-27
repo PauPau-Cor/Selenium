@@ -149,7 +149,7 @@
                     android:src="@drawable/ic_notif"
                     android:elevation="2dp"
                     android:layout_marginStart="10dp"
-                    app:tint="@color/black"
+                    style="@style/IVICN"
                     tools:viewBindingIgnore="true"
                     android:importantForAccessibility="no" />
 
@@ -321,7 +321,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             android:src="@drawable/ic_folder"
-                            app:tint="@color/black"
+                            style="@style/IVICN"
                             android:importantForAccessibility="no" />
 
                         <TextView
@@ -364,7 +364,7 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             android:src="@drawable/ic_folder"
-                            app:tint="@color/black"
+                            style="@style/IVICN"
                             android:importantForAccessibility="no" />
 
                         <TextView

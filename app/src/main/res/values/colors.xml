@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple">#5C3261</color>
+    <color name="purple">#84518A</color>
     <color name="blue">#447398</color>
     <color name="green">#50886A</color>
     <color name="red">#9A5151</color>
@@ -23,6 +23,6 @@
     <color name="black">#28334C</color>
     <color name="darkerblack">#1C2538</color>
     <color name="darkestblack">#101623</color>
-    <color name="darkestpurpleblack">#181025</color>
+    <color name="purpleblack">#211633</color>
     <color name="darkcolor">#466891</color>
 </resources>

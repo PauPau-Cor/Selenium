@@ -49,7 +49,7 @@ class DialogMaker {
     }
 
     fun addFolder(fragmentManager: FragmentManager, view: View, db: FirebaseFirestore, userID: String){
-        val addFolder = DialogAddFolder{ title  -> run{
+        val addFolder = DialogAddFolder(false) { title  -> run{
             db.collection(Constants.CategoriesCollection).add(CategoryModel(userID = userID, title = title))
                 .addOnSuccessListener {
                     Snackbar.make(view, R.string.folder_uploaded, LENGTH_SHORT).show()
@@ -57,6 +57,26 @@ class DialogMaker {
                 .addOnFailureListener {
                     Snackbar.make(view, view.context.getString(R.string.err_default, it.message), LENGTH_SHORT).show()
                 }
+        }}
+        addFolder.show(fragmentManager, "folderAdder")
+    }
+
+    fun editFolder(fragmentManager: FragmentManager, view: View, db: FirebaseFirestore, folder: CategoryModel){
+        val updateBatch = db.batch()
+        val addFolder = DialogAddFolder(true) { title  -> run{
+            val categoryRef = db.collection(Constants.CategoriesCollection).document(folder.categoryID!!)
+            updateBatch.update(categoryRef, Constants.titleField, title)
+
+            db.collection(Constants.TasksCollection).whereEqualTo(Constants.categoryIDField, folder.categoryID).get().addOnSuccessListener { snapshot ->
+                snapshot.forEach {
+                    updateBatch.update(it.reference, Constants.categoryNameField, title)
+                }
+                updateBatch.commit().addOnSuccessListener {
+                    Snackbar.make(view, R.string.folder_updated, LENGTH_SHORT).show()
+                }.addOnFailureListener {
+                    Snackbar.make(view, view.context.getString(R.string.err_default, it.message), LENGTH_SHORT).show()
+                }
+            }
         }}
         addFolder.show(fragmentManager, "folderAdder")
     }

@@ -106,4 +106,6 @@
     <string name="ACT_edit">Editar</string>
     <string name="no_date_tasks">Tareas sin fecha</string>
     <string name="no_nodate_task">No tiene tareas con fecha indeterminada.</string>
+    <string name="edit_folder">Editar categoria</string>
+    <string name="folder_updated">Categoria editada exitosamente.</string>
 </resources>

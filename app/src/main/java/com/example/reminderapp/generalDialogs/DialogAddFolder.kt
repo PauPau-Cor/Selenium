@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.reminderapp.R
 import com.example.reminderapp.databinding.DialogAddFolderBinding
 
-class DialogAddFolder (val listener: (title: String) -> Unit) : DialogFragment(){
+class DialogAddFolder (private val editor: Boolean, val listener: (title: String) -> Unit) : DialogFragment(){
 
     private lateinit var binding: DialogAddFolderBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -18,6 +18,10 @@ class DialogAddFolder (val listener: (title: String) -> Unit) : DialogFragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if(editor){
+            binding.title.text = getText(R.string.edit_folder)
+        }
+
         binding.confirmButton.setOnClickListener {
             valTitle()
         }
