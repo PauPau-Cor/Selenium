@@ -6,7 +6,7 @@ import android.util.Log
 import com.example.reminderapp.R
 import com.google.android.material.textfield.TextInputLayout
 import java.text.ParseException
-import java.util.*
+import java.util.Date
 
 
 class FieldsValidator {
@@ -17,6 +17,14 @@ class FieldsValidator {
                 it setError context.getString(R.string.err_empty_field)
                 return false
             }
+        }
+        return true
+    }
+
+    fun checkIfNotEmpty(field : TextInputLayout, context : Context): Boolean {
+        if(field.editText?.text.isNullOrBlank()){
+            field setError context.getString(R.string.err_empty_field)
+            return false
         }
         return true
     }

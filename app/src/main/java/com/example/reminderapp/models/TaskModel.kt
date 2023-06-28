@@ -1,8 +1,8 @@
 package com.example.reminderapp.models
 
 import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import com.google.firebase.firestore.DocumentId
+import kotlinx.parcelize.Parcelize
 import java.util.Date
 
 @Parcelize
@@ -13,7 +13,7 @@ data class TaskModel(
     val title : String = "",
     val progress : Int = 0,
     var categoryID : String = "",
-    val categoryName : String = "",
+    var categoryName : String = "",
     val dateFinished: Date = Date(),
     val priority : Int = 0,
     var dueType : Int = 0,

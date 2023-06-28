@@ -1,6 +1,7 @@
 package com.example.reminderapp.toDoMenus
 
 import android.os.Bundle
+import android.view.View.GONE
 import android.widget.ArrayAdapter
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import com.example.reminderapp.models.UserModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import java.time.DayOfWeek
 import java.time.ZoneId
@@ -28,6 +30,7 @@ class AddEditToDoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddEditToDoBinding
     private lateinit var db : FirebaseFirestore
     private lateinit var userModel : UserModel
+    private var categoryModel: CategoryModel? = null
     private lateinit var folders: ArrayList<CategoryModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +40,13 @@ class AddEditToDoActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         @Suppress("DEPRECATION")
         userModel = intent.getParcelableExtra(Constants.PutExUser)!!
+
+        @Suppress("DEPRECATION")
+        if(intent.hasExtra(Constants.PutExFolder)){
+            categoryModel = intent.getParcelableExtra(Constants.PutExFolder)
+            binding.TaskFolder.visibility = GONE
+        }
+
         setupDropdownOptions()
         setupTabLayout()
 
@@ -49,43 +59,39 @@ class AddEditToDoActivity : AppCompatActivity() {
 
     private fun validateData() {
         val validator = FieldsValidator()
+        val fieldsToValEmpt : Array<TextInputLayout>
 
         when(binding.viewPager.currentItem){
-            0 -> {
-                if(!validator.checkIfNotEmpty(
-                        arrayOf(
-                            binding.TaskTitle,
-                            binding.TaskFolder,
-                            binding.TaskImportance,),
-                        this)
-                ){ return }
-            }
             1 -> {
-                if(!validator.checkIfNotEmpty(
-                        arrayOf(
-                            binding.TaskTitle,
-                            binding.TaskFolder,
-                            binding.TaskImportance,
-                            (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).taskWithTime.binding.TaskTime,
-                            (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).taskWithTime.binding.TaskDate,),
-                        this)
-                ){ return }
+                fieldsToValEmpt = arrayOf(
+                    binding.TaskTitle,
+                    binding.TaskImportance,
+                    (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).taskWithTime.binding.TaskTime,
+                    (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).taskWithTime.binding.TaskDate,
+                    )
             }
             2 -> {
-                if(!validator.checkIfNotEmpty(
-                        arrayOf(
-                            binding.TaskTitle,
-                            binding.TaskFolder,
-                            binding.TaskImportance,
-                            (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).taskRepeating.binding.TaskTime,),
-                        this)
-                ){ return }
+                fieldsToValEmpt = arrayOf(
+                    binding.TaskTitle,
+                    binding.TaskImportance,
+                    (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).taskRepeating.binding.TaskTime,
+                    )
                 if ((binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).taskRepeating.binding.WeekGroup.selectedButtons.size == 0){
                     Snackbar.make(binding.root, this.getString(R.string.err_select_days), LENGTH_SHORT).show()
                     return
                 }
             }
+            else -> {
+                fieldsToValEmpt = arrayOf(
+                    binding.TaskTitle,
+                    binding.TaskImportance,
+                )
+            }
         }
+
+        if(!validator.checkIfNotEmpty(fieldsToValEmpt, this)){ return }
+        if(categoryModel == null && !validator.checkIfNotEmpty(binding.TaskFolder, this)){ return }
+
         makeModel()
     }
 
@@ -104,22 +110,28 @@ class AddEditToDoActivity : AppCompatActivity() {
                 1
             }
         }
-        val folder : String = binding.TaskFolder.editText?.text.toString()
         val newTask = TaskModel(
             userID = userModel.userID!!,
             title = binding.TaskTitle.editText?.text.toString().trim(),
             priority = priority,
-            categoryName = folder,
             token = userModel.token
         )
 
-        if(folder != this.getString(R.string.no_folder)){
-            folders.stream().filter{it.title == folder}
-                .limit(1)
-                .toList().forEach{
-                    newTask.categoryID = it.categoryID.toString()
-                }
+        if(categoryModel != null){
+            newTask.categoryName = categoryModel!!.title
+            newTask.categoryID = categoryModel!!.categoryID!!
+        }else{
+            newTask.categoryName = binding.TaskFolder.editText?.text.toString()
+
+            if(newTask.categoryName  != this.getString(R.string.no_folder)){
+                folders.stream().filter{it.title == newTask.categoryName }
+                    .limit(1)
+                    .toList().forEach{
+                        newTask.categoryID = it.categoryID.toString()
+                    }
+            }
         }
+
 
         when(binding.viewPager.currentItem){
             1 -> {

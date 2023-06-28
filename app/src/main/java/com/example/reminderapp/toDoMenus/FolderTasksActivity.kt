@@ -1,5 +1,6 @@
 package com.example.reminderapp.toDoMenus
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
 import androidx.appcompat.app.AppCompatActivity
@@ -103,7 +104,10 @@ class FolderTasksActivity : AppCompatActivity() {
     }
 
     private fun setUpAdd() {
-
+        binding.AddTaskBT.setOnClickListener {
+            startActivity(Intent(this, AddEditToDoActivity::class.java)
+                .putExtra(Constants.PutExUser, userModel).putExtra(Constants.PutExFolder, folderModel))
+        }
     }
 
     override fun onStart() {
