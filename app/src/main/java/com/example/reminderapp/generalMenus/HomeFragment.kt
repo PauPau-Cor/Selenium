@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -67,7 +68,7 @@ class HomeFragment : Fragment() {
     private fun setupPastDueTaskData() {
         var currentDate = Date()
         val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID)
-            .whereEqualTo(Constants.dueTypeField, 1).whereEqualTo(Constants.progressField, 0)
+            .whereEqualTo(Constants.dueTypeField, 1).whereEqualTo(Constants.finishedField, 0)
             .whereLessThanOrEqualTo(Constants.setDateField, currentDate)
             .orderBy(Constants.setDateField, Query.Direction.DESCENDING).limit(1)
         query.addSnapshotListener{ value, error ->
@@ -90,7 +91,7 @@ class HomeFragment : Fragment() {
     private fun setupUpcomingTaskData() {
         var currentDate = Date()
         val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID)
-            .whereEqualTo(Constants.dueTypeField, 1).whereEqualTo(Constants.progressField, 0)
+            .whereEqualTo(Constants.dueTypeField, 1).whereEqualTo(Constants.finishedField, 0)
             .whereGreaterThan(Constants.setDateField, currentDate).orderBy(Constants.setDateField).limit(1)
         query.addSnapshotListener{ value, error ->
             if (error == null && value != null && !value.isEmpty) {
@@ -101,6 +102,9 @@ class HomeFragment : Fragment() {
                 binding.upTaskTime.text = localTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))
 
                 binding.upTaskPrio.visibility = VISIBLE
+                binding.separator.visibility = VISIBLE
+                binding.upcDone.visibility = VISIBLE
+
                 when(upcomingtask.priority){
                     0 ->{
                         binding.upTaskPrio.setImageResource(R.drawable.ic_prio_low)
@@ -117,7 +121,7 @@ class HomeFragment : Fragment() {
             }else{
                 binding.upTaskTitle.text = getString(R.string.no_upc_task)
                 binding.upTaskTime.text = ""
-                binding.upTaskPrio.visibility = GONE
+                binding.upTaskPrio.visibility = INVISIBLE
                 binding.separator.visibility = GONE
                 binding.upcDone.visibility = GONE
                 currentDate = Date()
@@ -129,7 +133,7 @@ class HomeFragment : Fragment() {
         val currentDate = Calendar.getInstance(Locale.getDefault())
         val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID)
             .whereEqualTo(Constants.dueTypeField, 2).whereArrayContains(Constants.daysField, currentDate.get(Calendar.DAY_OF_WEEK)-1)
-            .whereEqualTo(Constants.progressField, 0)
+            .whereEqualTo(Constants.finishedField, 0)
         val options = FirestoreRecyclerOptions.Builder<TaskModel>()
             .setQuery(query, TaskModel::class.java).setLifecycleOwner(this).build()
         adapter = TodayWeeklyTasksAdapter(options, binding.todNoResults)

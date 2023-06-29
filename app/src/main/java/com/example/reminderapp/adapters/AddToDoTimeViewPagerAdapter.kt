@@ -12,16 +12,18 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 
-class AddToDoTimeViewPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
-    private val current = LocalDateTime.now()
-    private val roundedTime = current.plusMinutes((if (current.minute % 5 < 3) -(current.minute % 5) else 5 - (current.minute % 5)).toLong())
+class AddToDoTimeViewPagerAdapter(activity: FragmentActivity, date: LocalDateTime, days: ArrayList<Int>)
+    : FragmentStateAdapter(activity) {
+
+    private val roundedTime = date.plusMinutes((if (date.minute % 5 < 3) -(date.minute % 5) else 5 - (date.minute % 5)).toLong())
+        .withSecond(0).withNano(0)
 
     val taskWithTime = AddEditTaskWithTime.newInstance(
-        current.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)),
-        roundedTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
+        roundedTime
         )
     val taskRepeating = AddEditTaskRepeatingFields.newInstance(
-        roundedTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
+        roundedTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)),
+        days
         )
 
     private val fragmentList: ArrayList<Fragment> =

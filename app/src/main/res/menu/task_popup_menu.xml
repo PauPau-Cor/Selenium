@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/edit_task" android:title="@string/ACT_edit" />
+    <item android:id="@+id/delete_task" android:title="@string/ACT_delete" />
+    <item android:id="@+id/progress_task" android:title="@string/ACT_mark_progress" />
+</menu>

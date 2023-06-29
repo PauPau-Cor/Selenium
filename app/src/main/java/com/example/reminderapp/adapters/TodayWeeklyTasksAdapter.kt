@@ -70,14 +70,14 @@ open class WeeklyTodayTaskHolder(itemView: View) : ViewHolder(itemView){
             }
         }
 
-        if(model.progress == 1){
+        if(model.inProgress){
             taskProgressIndicator.visibility = View.VISIBLE
         }else{
             taskProgressIndicator.visibility = View.GONE
         }
 
         taskDone.setOnClickListener{
-            db.collection(Constants.TasksCollection).document(model.taskID!!).update(Constants.progressField, 2, Constants.dateFinishedField, Date())
+            db.collection(Constants.TasksCollection).document(model.taskID!!).update(Constants.finishedField, 2, Constants.dateFinishedField, Date())
         }
     }
 }

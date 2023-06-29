@@ -34,6 +34,9 @@
     <string name="err_wrong_email">This email is not associated with any account.</string>
     <string name="err_wrong_pass">Incorrect password.</string>
     <string name="ACT_mark_as_done">Mark as done.</string>
+    <string name="ACT_delete">Delete</string>
+    <string name="ACT_mark_progress">Progress</string>
+    <string name="ACT_edit">Edit</string>
     <string name="new_task">New task</string>
     <string name="menu_all_to_do">All tasks</string>
     <string name="low">Low</string>
@@ -79,7 +82,6 @@
     <string name="no_upc_task">You have no upcoming tasks.</string>
     <string name="welcome">Welcome %1$s.</string>
     <string name="no_rep_tasks">You have no weekly tasks scheduled for today</string>
-    <string name="ACT_edit">Edit</string>
     <string name="no_date_tasks">Tasks with no date</string>
     <string name="no_nodate_task">You have no task that do not have a date.</string>
     <string name="edit_folder">Edit folder</string>

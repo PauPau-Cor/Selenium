@@ -73,7 +73,7 @@ class FolderTasksActivity : AppCompatActivity() {
     private fun setUpUpc() {
         val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.categoryIDField, folderModel.categoryID)
             .whereEqualTo(Constants.dueTypeField, 1).orderBy(Constants.setDateField)
-            .whereEqualTo(Constants.progressField, 0)
+            .whereEqualTo(Constants.finishedField, 0)
         val options = FirestoreRecyclerOptions.Builder<TaskModel>()
             .setQuery(query, TaskModel::class.java).setLifecycleOwner(this).build()
         upcAdapter = FolderTasksAdapter(options, this, binding.upcNoResults)
@@ -85,7 +85,7 @@ class FolderTasksActivity : AppCompatActivity() {
         val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.categoryIDField, folderModel.categoryID)
             .whereEqualTo(Constants.dueTypeField, 2).whereArrayContains(Constants.daysField, currentDate.get(
                 Calendar.DAY_OF_WEEK)-1)
-            .whereEqualTo(Constants.progressField, 0)
+            .whereEqualTo(Constants.finishedField, 0)
         val options = FirestoreRecyclerOptions.Builder<TaskModel>()
             .setQuery(query, TaskModel::class.java).setLifecycleOwner(this).build()
         weeklyAdapter = FolderTasksAdapter(options, this, binding.weeklyNoResults)
@@ -95,7 +95,7 @@ class FolderTasksActivity : AppCompatActivity() {
 
     private fun setUpNoDate() {
         val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.categoryIDField, folderModel.categoryID)
-            .whereEqualTo(Constants.dueTypeField, 0).whereEqualTo(Constants.progressField, 0)
+            .whereEqualTo(Constants.dueTypeField, 0).whereEqualTo(Constants.finishedField, 0)
         val options = FirestoreRecyclerOptions.Builder<TaskModel>()
             .setQuery(query, TaskModel::class.java).setLifecycleOwner(this).build()
         noDateAdapter = FolderTasksAdapter(options, this, binding.noDateNoResults)

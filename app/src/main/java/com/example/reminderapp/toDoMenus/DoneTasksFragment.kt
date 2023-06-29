@@ -49,7 +49,7 @@ class DoneTasksFragment : Fragment() {
 
     private fun setUpRV() {
         val query: Query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.userIDField, userModel.userID)
-            .whereEqualTo(Constants.progressField, 2).orderBy(Constants.dateFinishedField, Query.Direction.DESCENDING)
+            .whereEqualTo(Constants.finishedField, 2).orderBy(Constants.dateFinishedField, Query.Direction.DESCENDING)
         val options = FirestoreRecyclerOptions.Builder<TaskModel>()
             .setQuery(query, TaskModel::class.java).setLifecycleOwner(this).build()
         adapter = DoneTasksAdapter(options)

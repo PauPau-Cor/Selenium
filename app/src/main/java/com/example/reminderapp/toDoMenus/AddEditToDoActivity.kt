@@ -1,7 +1,6 @@
 package com.example.reminderapp.toDoMenus
 
 import android.os.Bundle
-import android.view.View.GONE
 import android.widget.ArrayAdapter
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
@@ -19,8 +18,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import java.time.DayOfWeek
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.Date
 import kotlin.streams.toList
@@ -29,7 +31,9 @@ class AddEditToDoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddEditToDoBinding
     private lateinit var db : FirebaseFirestore
+    private lateinit var auth : FirebaseAuth
     private lateinit var userModel : UserModel
+    private var taskModel : TaskModel? = null
     private var categoryModel: CategoryModel? = null
     private lateinit var folders: ArrayList<CategoryModel>
 
@@ -38,22 +42,76 @@ class AddEditToDoActivity : AppCompatActivity() {
         binding = ActivityAddEditToDoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = FirebaseFirestore.getInstance()
-        @Suppress("DEPRECATION")
-        userModel = intent.getParcelableExtra(Constants.PutExUser)!!
+        auth = FirebaseAuth.getInstance()
 
-        @Suppress("DEPRECATION")
-        if(intent.hasExtra(Constants.PutExFolder)){
-            categoryModel = intent.getParcelableExtra(Constants.PutExFolder)
-            binding.TaskFolder.visibility = GONE
-        }
-
-        setupDropdownOptions()
-        setupTabLayout()
+        getIntentExtras()
 
         binding.Toolbar.setNavigationOnClickListener {finish() }
 
         binding.confirmButton.setOnClickListener{
             validateData()
+        }
+    }
+
+    private fun getIntentExtras() {
+        @Suppress("DEPRECATION")
+        if(intent.hasExtra(Constants.PutExUser)){
+            userModel = intent.getParcelableExtra(Constants.PutExUser)!!
+            setupDropdownOptions()
+        }else{
+            db.collection(Constants.UsersCollection).document(auth.uid!!).get().addOnSuccessListener{
+                userModel = it.toObject()!!
+                setupDropdownOptions()
+            }
+        }
+
+        @Suppress("DEPRECATION")
+        if(intent.hasExtra(Constants.PutExFolder)){
+            categoryModel = intent.getParcelableExtra(Constants.PutExFolder)
+            binding.TaskFolder.editText!!.setText(categoryModel!!.title)
+        }else{
+            binding.TaskFolder.editText!!.setText(R.string.no_folder)
+        }
+
+        @Suppress("DEPRECATION")
+        if(intent.hasExtra(Constants.PutExTask)){
+            taskModel = intent.getParcelableExtra(Constants.PutExTask)
+            setEditData()
+        }else{
+            setupTabLayout()
+        }
+    }
+
+    private fun setEditData() {
+        binding.TaskFolder.editText!!.setText(taskModel!!.categoryName)
+        binding.TaskTitle.editText!!.setText(taskModel!!.title)
+        when(taskModel!!.priority) {
+            2 -> {
+                binding.TaskImportance.editText!!.setText(R.string.high)
+            }
+
+            1 -> {
+                binding.TaskImportance.editText!!.setText(R.string.mid)
+            }
+
+            0 -> {
+                binding.TaskImportance.editText!!.setText(R.string.low)
+            }
+            else -> {
+                binding.TaskImportance.editText!!.setText(R.string.mid)
+            }
+        }
+        when(taskModel!!.dueType){
+            1 -> {
+                setupTabLayout(LocalDateTime.ofInstant(taskModel!!.setDate!!.toInstant(), ZoneId.systemDefault()))
+                binding.viewPager.setCurrentItem(1, false)
+            }
+            2 -> {
+                setupTabLayout(LocalDateTime.ofInstant(
+                    taskModel!!.repeatDates!![0].toInstant(),
+                    ZoneId.systemDefault()), taskModel!!.days)
+                binding.viewPager.setCurrentItem(2, false)
+            }
         }
     }
 
@@ -66,6 +124,7 @@ class AddEditToDoActivity : AppCompatActivity() {
                 fieldsToValEmpt = arrayOf(
                     binding.TaskTitle,
                     binding.TaskImportance,
+                    binding.TaskFolder,
                     (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).taskWithTime.binding.TaskTime,
                     (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).taskWithTime.binding.TaskDate,
                     )
@@ -74,6 +133,7 @@ class AddEditToDoActivity : AppCompatActivity() {
                 fieldsToValEmpt = arrayOf(
                     binding.TaskTitle,
                     binding.TaskImportance,
+                    binding.TaskFolder,
                     (binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).taskRepeating.binding.TaskTime,
                     )
                 if ((binding.viewPager.adapter as AddToDoTimeViewPagerAdapter).taskRepeating.binding.WeekGroup.selectedButtons.size == 0){
@@ -84,13 +144,13 @@ class AddEditToDoActivity : AppCompatActivity() {
             else -> {
                 fieldsToValEmpt = arrayOf(
                     binding.TaskTitle,
+                    binding.TaskFolder,
                     binding.TaskImportance,
                 )
             }
         }
 
         if(!validator.checkIfNotEmpty(fieldsToValEmpt, this)){ return }
-        if(categoryModel == null && !validator.checkIfNotEmpty(binding.TaskFolder, this)){ return }
 
         makeModel()
     }
@@ -206,8 +266,8 @@ class AddEditToDoActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupTabLayout() {
-        binding.viewPager.adapter = AddToDoTimeViewPagerAdapter(this)
+    private fun setupTabLayout(dateTime: LocalDateTime = LocalDateTime.now(), days: ArrayList<Int> = arrayListOf()) {
+        binding.viewPager.adapter = AddToDoTimeViewPagerAdapter(this, dateTime, days)
         TabLayoutMediator(binding.timeDefinition, binding.viewPager) { tab, pos ->
             when(pos){
                 0 -> {
@@ -228,7 +288,6 @@ class AddEditToDoActivity : AppCompatActivity() {
         }.attach()
     }
 
-    //TODO: handle no connection situation
     private fun setupDropdownOptions(){
 
         val importances : Array<String> = arrayOf(this.getString(R.string.high), this.getString(R.string.mid), this.getString(R.string.low))
@@ -243,10 +302,7 @@ class AddEditToDoActivity : AppCompatActivity() {
             val dropDownOptions: Array<String> = names.toArray(arrayOfNulls(names.size))
             val foldersAdapter = ArrayAdapter(this, R.layout.holder_dropdown_item, dropDownOptions)
             (binding.TaskFolder.editText as? MaterialAutoCompleteTextView)?.setAdapter(foldersAdapter)
-        }.addOnFailureListener{
-
         }
-
     }
 
 }
