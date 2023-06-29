@@ -69,6 +69,13 @@ class HomeFragment : Fragment() {
         setupUpcomingTaskData()
         setupWeeklyTodayTasks()
         setupFolders()
+        setupAddTask()
+    }
+
+    private fun setupAddTask() {
+        binding.AddTaskBT.setOnClickListener{
+            startActivity(Intent(context, AddEditToDoActivity::class.java).putExtra(Constants.PutExUser, userModel))
+        }
     }
 
     private fun setupPastDueTaskData() {

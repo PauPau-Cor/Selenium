@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,36 +7,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".generalMenus.HomeFragment"
     style="@style/BG">
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/MyAppbar"
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:fitsSystemWindows="true">
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapse_toolbar"
+        android:layout_height="wrap_content"
+        style="@style/BG">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/MyAppbar"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:fitsSystemWindows="true">
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapse_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/homepage_gradient"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <TextView
+                    android:id="@+id/wlcMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/welcome"
+                    android:fontFamily="@font/louiscafebold"
+                    android:textSize="20sp"
+                    android:layout_marginStart="10dp"/>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/homepage_gradient"
-            android:fitsSystemWindows="true"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <TextView
-                android:id="@+id/wlcMsg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/welcome"
-                android:fontFamily="@font/louiscafebold"
-                android:textSize="20sp"
-                android:layout_marginStart="10dp"/>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -383,5 +392,17 @@
 
                 </com.google.android.material.card.MaterialCardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/AddTaskBT"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/ic_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:contentDescription="@string/add_task" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

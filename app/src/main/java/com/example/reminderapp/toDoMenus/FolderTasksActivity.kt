@@ -72,6 +72,7 @@ class FolderTasksActivity : AppCompatActivity() {
 
     private fun setUpUpc() {
         val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.categoryIDField, folderModel.categoryID)
+            .whereEqualTo(Constants.userIDField, userModel.userID!!)
             .whereEqualTo(Constants.dueTypeField, 1).orderBy(Constants.setDateField)
             .whereEqualTo(Constants.finishedField, 0)
         val options = FirestoreRecyclerOptions.Builder<TaskModel>()
@@ -83,6 +84,7 @@ class FolderTasksActivity : AppCompatActivity() {
     private fun setUpWeekly() {
         val currentDate = Calendar.getInstance(Locale.getDefault())
         val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.categoryIDField, folderModel.categoryID)
+            .whereEqualTo(Constants.userIDField, userModel.userID!!)
             .whereEqualTo(Constants.dueTypeField, 2).whereArrayContains(Constants.daysField, currentDate.get(
                 Calendar.DAY_OF_WEEK)-1)
             .whereEqualTo(Constants.finishedField, 0)
@@ -95,6 +97,7 @@ class FolderTasksActivity : AppCompatActivity() {
 
     private fun setUpNoDate() {
         val query = db.collection(Constants.TasksCollection).whereEqualTo(Constants.categoryIDField, folderModel.categoryID)
+            .whereEqualTo(Constants.userIDField, userModel.userID!!)
             .whereEqualTo(Constants.dueTypeField, 0).whereEqualTo(Constants.finishedField, 0)
         val options = FirestoreRecyclerOptions.Builder<TaskModel>()
             .setQuery(query, TaskModel::class.java).setLifecycleOwner(this).build()
