@@ -21,23 +21,15 @@ class FieldsValidator {
         return true
     }
 
-    fun checkIfNotEmpty(field : TextInputLayout, context : Context): Boolean {
-        if(field.editText?.text.isNullOrBlank()){
-            field setError context.getString(R.string.err_empty_field)
-            return false
-        }
-        return true
-    }
-
-    fun checkPasswords(Pass: TextInputLayout, PassConf: TextInputLayout, context: Context): Boolean {
-        if(Pass.editText?.text.toString() != PassConf.editText?.text.toString()){
-            Pass setError context.getString(R.string.err_pass_not_match)
+    fun checkPasswords(pass: TextInputLayout, passConf: TextInputLayout, context: Context): Boolean {
+        if(pass.editText?.text.toString() != passConf.editText?.text.toString()){
+            pass setError context.getString(R.string.err_pass_not_match)
             return false
         }
 
         val passRegex = Regex("""^(?=.*\d)(?=.*[A-ZÑ])(?=.*[a-zñ]).{8,}$""")
-        if(!(passRegex matches Pass.editText!!.text)){
-            Pass setError context.getString(R.string.err_pass_not_secure)
+        if(!(passRegex matches pass.editText!!.text)){
+            pass setError context.getString(R.string.err_pass_not_secure)
             return false
         }
         return true
@@ -59,17 +51,17 @@ class FieldsValidator {
         return true
     }
 
-    fun checkEmail(Email: TextInputLayout, context: Context): Boolean {
+    fun checkEmail(email: TextInputLayout, context: Context): Boolean {
         val mailRegex = Regex("""^[\w-.]+@([\w-]+\.)+[\w-]{2,4}${'$'}""")
-        if(!(mailRegex matches Email.editText!!.text)){
-            Email setError context.getString(R.string.err_wrong_format)
+        if(!(mailRegex matches email.editText!!.text)){
+            email setError context.getString(R.string.err_wrong_format)
             return false
         }
         return true
     }
 
-    private infix fun TextInputLayout.setError(Error: String){
-        this.error = Error
+    private infix fun TextInputLayout.setError(error: String){
+        this.error = error
         this.isErrorEnabled = true
         this.requestFocus()
         this.editText?.addTextChangedListener(ErrorRemover(this))

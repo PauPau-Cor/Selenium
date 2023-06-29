@@ -1,5 +1,8 @@
 package com.example.reminderapp.generalUtilities
 
+import com.example.reminderapp.dataClasses.Constants
+import com.example.reminderapp.models.CategoryModel
+import com.google.firebase.firestore.FirebaseFirestore
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -24,6 +27,20 @@ class GeneralUtilities {
         }
         newLocalDateTime = newLocalDateTime.with(currentLocalDateTime.toLocalTime())
         return Date.from(newLocalDateTime.atZone(ZoneId.systemDefault()).toInstant())
+    }
+
+    fun deleteFolder(model: CategoryModel, db: FirebaseFirestore) {
+        val batch = db.batch()
+        val folderRef = db.collection(Constants.CategoriesCollection).document(model.categoryID!!)
+        batch.delete(folderRef)
+
+        db.collection(Constants.TasksCollection).whereEqualTo(Constants.categoryIDField, model.categoryID)
+            .get().addOnSuccessListener {
+                it.forEach { it1 ->
+                    batch.delete(it1.reference)
+                }
+                batch.commit()
+            }
     }
 
 }

@@ -29,7 +29,7 @@
             </menu>
         </item>
 
-        <item android:title="@string/calendar">
+        <!--<item android:title="@string/calendar">
             <menu>
                 <group android:checkableBehavior="single">
                 <item
@@ -46,7 +46,7 @@
                     android:title="@string/calendar_days" />
                 </group>
             </menu>
-        </item>
+        </item>-->
         <item android:title="@string/account">
             <menu>
                 <group android:checkableBehavior="none">

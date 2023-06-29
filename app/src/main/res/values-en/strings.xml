@@ -86,4 +86,7 @@
     <string name="no_nodate_task">You have no task that do not have a date.</string>
     <string name="edit_folder">Edit folder</string>
     <string name="folder_updated">Folder updated successfully.</string>
+    <string name="ACT_erase_filters">Erase filters</string>
+    <string name="CONF_delete_folder">Confirmar eliminar categoria</string>
+    <string name="CONF_delete_folder_msg">Esto tambien borrará todas las tareas dentro de la categoria</string>
 </resources>

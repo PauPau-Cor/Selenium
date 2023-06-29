@@ -1,23 +1,29 @@
 package com.example.reminderapp.generalMenus
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reminderapp.R
 import com.example.reminderapp.adapters.TodayWeeklyTasksAdapter
 import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.databinding.FragmentHomeBinding
+import com.example.reminderapp.generalUtilities.DialogMaker
+import com.example.reminderapp.generalUtilities.GeneralUtilities
 import com.example.reminderapp.generalUtilities.WrappedLinearLayoutManager
 import com.example.reminderapp.models.CategoryModel
 import com.example.reminderapp.models.TaskModel
 import com.example.reminderapp.models.UserModel
+import com.example.reminderapp.toDoMenus.AddEditToDoActivity
 import com.example.reminderapp.toDoMenus.FolderTasksActivity
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.transition.MaterialSharedAxis
@@ -117,6 +123,11 @@ class HomeFragment : Fragment() {
                     }
                 }
 
+                binding.upcmnCrd.setOnLongClickListener{
+                    showTaskPopUpMenu(upcomingtask, it)
+                    return@setOnLongClickListener true
+                }
+
                 currentDate = Date()
             }else{
                 binding.upTaskTitle.text = getString(R.string.no_upc_task)
@@ -127,6 +138,44 @@ class HomeFragment : Fragment() {
                 currentDate = Date()
             }
         }
+    }
+
+    private fun showTaskPopUpMenu(model: TaskModel, view: View) {
+        val popupMenu = PopupMenu(view.context, view)
+        popupMenu.inflate(R.menu.task_popup_menu)
+
+        popupMenu.setOnMenuItemClickListener {
+            return@setOnMenuItemClickListener handleFolderPopUpMenuClick(model, view, it)
+        }
+
+        popupMenu.show()
+    }
+
+    private fun handleFolderPopUpMenuClick(model: TaskModel, view: View, item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.edit_task -> {
+                startActivity(Intent(view.context, AddEditToDoActivity::class.java)
+                    .putExtra(Constants.PutExTask, model))
+                true
+            }
+
+            //TODO: confirmation dialog
+            R.id.delete_task -> {
+                db.collection(Constants.TasksCollection).document(model.taskID!!).delete()
+                true
+            }
+
+            R.id.progress_task -> {
+                db.collection(Constants.TasksCollection).document(model.taskID!!)
+                    .update(Constants.inProgressField, !model.inProgress)
+                true
+            }
+
+            else -> {
+                false
+            }
+        }
+
     }
 
     private fun setupWeeklyTodayTasks(){
@@ -153,12 +202,54 @@ class HomeFragment : Fragment() {
                     startActivity(Intent(context, FolderTasksActivity::class.java)
                         .putExtra(Constants.PutExFolder, recentFolder).putExtra(Constants.PutExUser, userModel))
                 }
+
+                binding.recentFolder.setOnLongClickListener{
+                    showFolderPopUpMenu(recentFolder, it, FirebaseFirestore.getInstance())
+                    return@setOnLongClickListener true
+                }
             }
         }
 
         binding.defaultFolder.setOnClickListener {
             startActivity(Intent(context, FolderTasksActivity::class.java).putExtra(Constants.PutExUser, userModel))
         }
+    }
+
+    private fun showFolderPopUpMenu(model: CategoryModel, view: View, db: FirebaseFirestore) {
+        val popupMenu = PopupMenu(context, view)
+        popupMenu.inflate(R.menu.folder_popup_menu)
+
+        popupMenu.setOnMenuItemClickListener {
+            return@setOnMenuItemClickListener handleFolderPopUpMenuClick(model, it, db)
+        }
+
+        popupMenu.show()
+    }
+
+    private fun handleFolderPopUpMenuClick(model: CategoryModel, item: MenuItem, db: FirebaseFirestore): Boolean {
+        return when(item.itemId){
+            R.id.edit_folder -> {
+                val dialogMaker = DialogMaker()
+                dialogMaker.editFolder(childFragmentManager, binding.root, db, model)
+                true
+            }
+
+            R.id.delete_folder -> {
+                AlertDialog.Builder(context).setTitle(R.string.CONF_delete_folder)
+                    .setMessage(R.string.CONF_delete_folder_msg)
+                    .setPositiveButton(android.R.string.ok) { dialog, _ -> run{
+                        GeneralUtilities().deleteFolder(model, db)
+                        dialog.dismiss()
+                    }}
+                    .setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.dismiss() }.show()
+                true
+            }
+
+            else -> {
+                false
+            }
+        }
+
     }
 
     override fun onStart() {

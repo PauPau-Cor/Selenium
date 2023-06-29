@@ -110,4 +110,7 @@
     <string name="no_nodate_task">No tiene tareas con fecha indeterminada.</string>
     <string name="edit_folder">Editar categoria</string>
     <string name="folder_updated">Categoria editada exitosamente.</string>
+    <string name="ACT_erase_filters">Borrar filtros</string>
+    <string name="CONF_delete_folder">Confirmar eliminar categoria</string>
+    <string name="CONF_delete_folder_msg">Esto tambien borrará todas las tareas dentro de la categoria</string>
 </resources>

@@ -1,8 +1,11 @@
 package com.example.reminderapp.adapters
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.RecyclerView.INVISIBLE
@@ -11,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.reminderapp.R
 import com.example.reminderapp.dataClasses.Constants
 import com.example.reminderapp.models.TaskModel
+import com.example.reminderapp.toDoMenus.AddEditToDoActivity
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
@@ -79,6 +83,51 @@ open class WeeklyTodayTaskHolder(itemView: View) : ViewHolder(itemView){
         taskDone.setOnClickListener{
             db.collection(Constants.TasksCollection).document(model.taskID!!).update(Constants.finishedField, 2, Constants.dateFinishedField, Date())
         }
+
+        itemView.setOnLongClickListener {
+            showPopUpMenu(model, it, db)
+            return@setOnLongClickListener true
+        }
+
+    }
+
+    private fun showPopUpMenu(model: TaskModel, view: View, db: FirebaseFirestore) {
+        val popupMenu = PopupMenu(view.context, view)
+        popupMenu.inflate(R.menu.task_popup_menu)
+
+        popupMenu.setOnMenuItemClickListener {
+            return@setOnMenuItemClickListener handlePopUpMenuClick(model, view, it, db)
+        }
+
+        popupMenu.show()
+    }
+
+    private fun handlePopUpMenuClick(model: TaskModel, view: View, item: MenuItem, db: FirebaseFirestore): Boolean {
+        return when(item.itemId){
+            R.id.edit_task -> {
+                view.context.startActivity(
+                    Intent(view.context, AddEditToDoActivity::class.java)
+                    .putExtra(Constants.PutExTask, model))
+                true
+            }
+
+            //TODO: confirmation dialog
+            R.id.delete_task -> {
+                db.collection(Constants.TasksCollection).document(model.taskID!!).delete()
+                true
+            }
+
+            R.id.progress_task -> {
+                db.collection(Constants.TasksCollection).document(model.taskID!!)
+                    .update(Constants.inProgressField, !model.inProgress)
+                true
+            }
+
+            else -> {
+                false
+            }
+        }
+
     }
 }
 

@@ -60,7 +60,7 @@ class AddEditTaskWithTime : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(localDateTime: LocalDateTime,) =
+        fun newInstance(localDateTime: LocalDateTime) =
             AddEditTaskWithTime().apply {
                 arguments = Bundle().apply {
                     putSerializable(ARG_LOCAL_DT, localDateTime)
